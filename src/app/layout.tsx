@@ -29,13 +29,22 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <div
             className={cn(
-              'fixed h-screen w-full bg-gradient-to-br from-background to-blue-50 dark:bg-gradient-to-br dark:from-gray-800 dark:via-gray-900 dark:to-slate-900',
+              'h-screen w-full flex flex-col justify-between',
+              'bg-primary/30',
+              // ' bg-gradient-to-br from-background to-blue-50 dark:bg-gradient-to-br dark:from-gray-800 dark:via-gray-900 dark:to-slate-900 ',
             )}
-          />
-          <Header />
-          <main className={cn('relative z-10')}>{children}</main>
-          <Footer />
-          <Analytics />
+          >
+            <Header />
+            <main
+              className={cn(
+                'container py-4 h-full justify-start items-start md:py-0',
+              )}
+            >
+              {children}
+            </main>
+            <Footer />
+            <Analytics />{' '}
+          </div>
         </ThemeProvider>
       </body>
     </html>

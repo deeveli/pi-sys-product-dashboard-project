@@ -4,11 +4,52 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
+    /* Neutral colors */
+    --background: 30 60% 98%; /* Warm ivory background */
+    --foreground: 220 15% 15%; /* Neutral dark text */
+    --surface: 0 0% 100%; /* Card/modal background */
+    --surface-foreground: 220 15% 15%; /* Text on surface */
+    --border: 30 20% 85%; /* Soft warm border */
+    --input-background: 30 30% 94%; /* Input fields background */
 
-    --muted: 210 40% 96.1%;
-    --muted-foreground: 215.4 16.3% 46.9%;
+    /* Primary Color (Friendly orange) */
+    --primary: 28 90% 55%; /* Warm orange - attention-grabbing, energetic */
+    --primary-foreground: 0 0% 100%; /* White on primary */
+
+    /* Secondary Color (Soft pink) */
+    --secondary: 340 80% 70%; /* Calming rose - elegant, modern */
+    --secondary-foreground: 0 0% 100%;
+
+    /* Accent Colors */
+    --accent: 180 100% 45%; /* Turquoise - energetic accent */
+    --accent-foreground: 0 0% 100%;
+
+    /* Error / Destructive Colors */
+    --destructive: 0 75% 55%; /* Friendly red */
+    --destructive-foreground: 0 0% 100%;
+
+    /* Success */
+    --success: 142 70% 45%; /* Fresh green */
+    --success-foreground: 0 0% 100%;
+
+    /* Info */
+    --info: 210 100% 55%; /* Calming blue */
+    --info-foreground: 0 0% 100%;
+
+    /* Warning */
+    --warning: 45 100% 60%; /* Orange-yellow */
+    --warning-foreground: 0 0% 100%;
+
+    /* Sidebar */
+    --sidebar-background: 30 60% 98%;
+    --sidebar-foreground: 220 15% 15%;
+    --sidebar-border: 30 20% 85%;
+
+    --accent: 210 40% 96.1%;
+    --accent-foreground: 222.2 47.4% 11.2%;
+
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
     --popover: 0 0% 100%;
     --popover-foreground: 222.2 84% 4.9%;
@@ -18,34 +59,56 @@
 
     --border: 214.3 31.8% 91.4%;
     --input: 214.3 31.8% 91.4%;
-
-    --primary: 222.2 47.4% 11.2%;
-    --primary-foreground: 210 40% 98%;
-
-    --secondary: 210 40% 96.1%;
-    --secondary-foreground: 222.2 47.4% 11.2%;
-
-    --accent: 210 40% 96.1%;
-    --accent-foreground: 222.2 47.4% 11.2%;
-
-    --destructive: 0 84.2% 60.2%;
-    --destructive-foreground: 210 40% 98%;
-
-    --border: 214.3 31.8% 91.4%;
-    --input: 214.3 31.8% 91.4%;
     --ring: 0 0% 3.9%;
 
     --radius: 0.5rem;
 
-    --sidebar: 210 40% 96.1%;
+     /* Text Colors */
+     --text-heading: 220 15% 15%;      /* Default dark for headings */
+     --text-body: 220 10% 25%;         /* Slightly lighter for body */
+     --text-muted: 220 10% 50%;        /* For secondary text */
+     --text-inverted: 0 0% 100%;       /* Light text on dark backgrounds */
+     --text-accent: 28 90% 55%;        /* Accent for highlights or links */
+     --text-secondary: 340 80% 70%;    /* Secondary emphasis */
+     --text-success: 142 70% 45%;      /* For success messages */
+     --text-warning: 45 100% 60%;      /* For warnings */
+     --text-danger: 0 75% 55%;         /* For errors or alerts */
+
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 222 20% 10%; /* Almost black but soft */
+    --foreground: 0 0% 100%;
+    --surface: 222 20% 14%;
+    --surface-foreground: 0 0% 100%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --primary: 28 100% 60%; /* Slightly brighter orange */
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 340 80% 65%;
+    --secondary-foreground: 0 0% 100%;
+
+    --accent: 180 100% 50%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 85% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --success: 142 70% 50%;
+    --success-foreground: 0 0% 100%;
+
+    --info: 210 100% 65%;
+    --info-foreground: 0 0% 100%;
+
+    --warning: 45 100% 55%;
+    --warning-foreground: 0 0% 100%;
+
+    --sidebar-background: 222 20% 10%;
+    --sidebar-foreground: 0 0% 100%;
+    --sidebar-border: 222 15% 40%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
 
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
@@ -56,21 +119,20 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
-
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
-
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 85.7% 97.3%;
 
     --ring: 217.2 32.6% 17.5%;
 
-    --sidebar: 217.2 32.6% 17.5%;
+    --text-heading: 0 0% 100%;
+    --text-body: 0 0% 85%;
+    --text-muted: 0 0% 60%;
+    --text-inverted: 220 15% 15%;
+    --text-accent: 28 100% 60%;
+    --text-secondary: 340 80% 65%;
+    --text-success: 142 70% 50%;
+    --text-warning: 45 100% 55%;
+    --text-danger: 0 85% 50%;
   }
 }
 
