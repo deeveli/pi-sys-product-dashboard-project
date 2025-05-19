@@ -66,7 +66,7 @@
      /* Text Colors */
      --text-heading: 220 15% 15%;      /* Default dark for headings */
      --text-body: 220 10% 25%;         /* Slightly lighter for body */
-     --text-muted: 220 10% 50%;        /* For secondary text */
+     --muted: 220 10% 50%;        /* For secondary text */
      --text-inverted: 0 0% 100%;       /* Light text on dark backgrounds */
      --text-accent: 28 90% 55%;        /* Accent for highlights or links */
      --text-secondary: 340 80% 70%;    /* Secondary emphasis */
@@ -126,7 +126,7 @@
 
     --text-heading: 0 0% 100%;
     --text-body: 0 0% 85%;
-    --text-muted: 0 0% 60%;
+    --muted: 0 0% 60%;
     --text-inverted: 220 15% 15%;
     --text-accent: 28 100% 60%;
     --text-secondary: 340 80% 65%;

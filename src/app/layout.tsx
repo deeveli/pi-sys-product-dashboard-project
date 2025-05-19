@@ -29,7 +29,7 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <div
             className={cn(
-              'h-screen w-full flex flex-col justify-between',
+              'h-full w-full flex flex-col justify-between',
               'bg-primary/30',
               // ' bg-gradient-to-br from-background to-blue-50 dark:bg-gradient-to-br dark:from-gray-800 dark:via-gray-900 dark:to-slate-900 ',
             )}
