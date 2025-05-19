@@ -1,18 +1,20 @@
 export const BASE_URL =
   process.env.NODE_ENV === 'production'
-    ? 'https://snxtw.vercel.app'
-    : 'http://localhost:3000'
+    ? 'https://pi-sys-product-dashboard-project.vercel.app'
+    : 'http://localhost:3000';
 
 export const siteConfig = {
-  name: 'snxtw',
+  name: 'deeveli',
   title: 'Next.js Starter Template',
   description:
     'Next.js bootstrapped by Tailwind CSS and Typescript setup with useful development features.',
   author: {
-    name: 'Bona Brian Siagian',
-    url: 'https://bonabrian.com',
-    github: 'https://github.com/bonabrian',
-    twitter: '@bonabrian_',
+    name: 'Divine Elikplim Abah',
+    url: 'https://deeveli.vercel.app',
+    github: 'https://github.com/deeveli',
+    twitter: '@mr_deeveli',
+    linkedin: 'https://www.linkedin.com/in/deeveli/',
+    email: 'divine.e.abah@gmail.com',
   },
   keywords: [
     'react',
@@ -29,4 +31,4 @@ export const siteConfig = {
     'eslint',
     'prettier',
   ],
-}
+};

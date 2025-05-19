@@ -1,7 +1,7 @@
-import Link from 'next/link'
-import Balancer from 'react-wrap-balancer'
+import Link from 'next/link';
+import Balancer from 'react-wrap-balancer';
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
 const OpenSource = () => {
   return (
@@ -31,10 +31,10 @@ const OpenSource = () => {
           )}
         >
           <Balancer>
-            snxtw is open source and powered by open source software. The code
-            is available on{' '}
+            pi-sys-product-dashboard-project is open source and powered by open
+            source software. The code is available on{' '}
             <Link
-              href="https://github.com/bonabrian/snxtw"
+              href="https://github.com/deeveli/pi-sys-product-dashboard-project"
               target="_blank"
               rel="noreferrer"
               className="underline underline-offset-4"
@@ -45,7 +45,7 @@ const OpenSource = () => {
         </p>
       </div>
     </section>
-  )
-}
+  );
+};
 
-export default OpenSource
+export default OpenSource;

@@ -1,9 +1,9 @@
-import Link from 'next/link'
-import Balancer from 'react-wrap-balancer'
+import Link from 'next/link';
+import Balancer from 'react-wrap-balancer';
 
-import Icons from '@/components/icons'
-import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/lib/utils'
+import Icons from '@/components/icons';
+import { buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
 
 const stack = [
   {
@@ -30,17 +30,17 @@ const stack = [
     icon: Icons.vercel,
     className: 'hover:text-foreground',
   },
-]
+];
 
 const Hero = async () => {
   const { stargazers_count: stars } = await fetch(
-    'https://api.github.com/repos/bonabrian/nextjs-starter-tailwind',
+    'https://api.github.com/repos/deeveli/nextjs-starter-tailwind',
     {
       next: { revalidate: 60 },
     },
   )
     .then((res) => res.json())
-    .catch((e) => console.error(e))
+    .catch((e) => console.error(e));
 
   return (
     <div className={cn('container')}>
@@ -76,7 +76,7 @@ const Hero = async () => {
             )}
           >
             <Link
-              href="https://github.com/new?template_name=nextjs-starter-tailwind&template_owner=bonabrian"
+              href="https://github.com/new?template_name=nextjs-starter-tailwind&template_owner=deeveli"
               className={cn(buttonVariants(), 'gap-x-2')}
               target="_blank"
               rel="noopener noreferrer"
@@ -84,7 +84,7 @@ const Hero = async () => {
               Use This Template
             </Link>
             <Link
-              href="https://github.com/bonabrian/nextjs-starter-tailwind"
+              href="https://github.com/deeveli/nextjs-starter-tailwind"
               className={cn(buttonVariants({ variant: 'outline' }), 'gap-x-2')}
               target="_blank"
               rel="noopener noreferrer"
@@ -117,7 +117,7 @@ const Hero = async () => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Hero
+export default Hero;

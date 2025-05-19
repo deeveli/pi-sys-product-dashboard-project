@@ -1,7 +1,7 @@
-import Link from 'next/link'
+import Link from 'next/link';
 
-import { siteConfig } from '@/data/app'
-import { cn } from '@/lib/utils'
+import { siteConfig } from '@/data/app';
+import { cn } from '@/lib/utils';
 
 const Footer = () => {
   return (
@@ -31,7 +31,7 @@ const Footer = () => {
             </Link>
           </p>
           <Link
-            href="https://github.com/bonabrian/snxtw"
+            href="https://github.com/deeveli/pi-sys-product-dashboard-project"
             target="_blank"
             rel="noreferrer"
             className={cn(
@@ -61,7 +61,7 @@ const Footer = () => {
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;
