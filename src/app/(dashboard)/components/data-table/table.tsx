@@ -59,9 +59,9 @@ export function DataTable<TData, TValue>({
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     debugTable: true,
-    meta: {
-      onEditClick: onEditClick,
-    },
+    // meta: {
+    //   onEditClick: onEditClick,
+    // },
   });
 
   return (

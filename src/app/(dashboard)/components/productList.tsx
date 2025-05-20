@@ -49,6 +49,7 @@ import {
   Trash2,
 } from 'lucide-react';
 import React from 'react';
+import { ViewProduct } from './dialogs/viewProduct';
 
 export interface DataProps {
   data: Product[];
@@ -66,6 +67,10 @@ const ProductList: React.FC<DataProps> = ({ data, onProductUpdated }) => {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [editingProductId, setEditingProductId] = useState<number | null>(null);
 
+  // State for controlling the View Product modal
+  const [isViewOpen, setIsViewOpen] = useState(false);
+  const [viewingProductId, setViewingProductId] = useState<number | null>(null);
+
   useEffect(() => {
     if (data) {
       setLoading(false);
@@ -76,6 +81,12 @@ const ProductList: React.FC<DataProps> = ({ data, onProductUpdated }) => {
   const handleEditClick = (productId: number) => {
     setEditingProductId(productId);
     setIsEditOpen(true);
+  };
+
+  // Callback function to open the View Product modal
+  const handleViewClick = (productId: number) => {
+    setViewingProductId(productId);
+    setIsViewOpen(true);
   };
 
   const columns: ColumnDef<Product>[] = [
@@ -259,7 +270,12 @@ const ProductList: React.FC<DataProps> = ({ data, onProductUpdated }) => {
                   <Copy size={15} color="#f48525" /> Copy
                 </DropdownMenuItem>
                 <DropdownMenuSeparator className=" bg-primary/20" />
-                <DropdownMenuItem className="flex w-full cursor-pointer gap-2">
+                <DropdownMenuItem
+                  className="flex w-full cursor-pointer gap-2"
+                  onClick={() => {
+                    if (product?.id !== undefined) handleViewClick(product.id);
+                  }}
+                >
                   <Eye size={15} color="#f48525" />
                   View
                 </DropdownMenuItem>
@@ -402,6 +418,15 @@ const ProductList: React.FC<DataProps> = ({ data, onProductUpdated }) => {
           isOpen={isEditOpen}
           onOpenChange={setIsEditOpen}
           onProductUpdated={onProductUpdated}
+        />
+      )}
+
+      {/* Render the ViewProduct modal */}
+      {isViewOpen && (
+        <ViewProduct
+          productId={viewingProductId}
+          isOpen={isViewOpen}
+          onOpenChange={setIsViewOpen}
         />
       )}
     </section>
