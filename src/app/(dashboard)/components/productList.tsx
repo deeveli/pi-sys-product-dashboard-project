@@ -50,6 +50,7 @@ import {
 } from 'lucide-react';
 import React from 'react';
 import { ViewProduct } from './dialogs/viewProduct';
+import { DeleteProduct } from './dialogs/deleteProduct';
 
 export interface DataProps {
   data: Product[];
@@ -71,6 +72,10 @@ const ProductList: React.FC<DataProps> = ({ data, onProductUpdated }) => {
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [viewingProductId, setViewingProductId] = useState<number | null>(null);
 
+  // State for controlling the View Product modal
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [deleteProductId, setDeleteProductId] = useState<number | null>(null);
+
   useEffect(() => {
     if (data) {
       setLoading(false);
@@ -87,6 +92,12 @@ const ProductList: React.FC<DataProps> = ({ data, onProductUpdated }) => {
   const handleViewClick = (productId: number) => {
     setViewingProductId(productId);
     setIsViewOpen(true);
+  };
+
+  // Callback function to open the View Product modal
+  const handleDeleteClick = (productId: number) => {
+    setDeleteProductId(productId);
+    setIsDeleteOpen(true);
   };
 
   const columns: ColumnDef<Product>[] = [
@@ -288,7 +299,13 @@ const ProductList: React.FC<DataProps> = ({ data, onProductUpdated }) => {
                   <Pencil size={15} color="#f48525" />
                   Edit
                 </DropdownMenuItem>
-                <DropdownMenuItem className="flex w-full cursor-pointer gap-2">
+                <DropdownMenuItem
+                  className="flex w-full cursor-pointer gap-2"
+                  onClick={() => {
+                    if (product?.id !== undefined)
+                      handleDeleteClick(product.id);
+                  }}
+                >
                   <Trash2 size={15} color="#f48525" />
                   Delete
                 </DropdownMenuItem>
@@ -427,6 +444,15 @@ const ProductList: React.FC<DataProps> = ({ data, onProductUpdated }) => {
           productId={viewingProductId}
           isOpen={isViewOpen}
           onOpenChange={setIsViewOpen}
+        />
+      )}
+
+      {/* Render the ViewProduct modal */}
+      {isDeleteOpen && (
+        <DeleteProduct
+          productId={deleteProductId}
+          isOpen={isDeleteOpen}
+          onOpenChange={setIsDeleteOpen}
         />
       )}
     </section>

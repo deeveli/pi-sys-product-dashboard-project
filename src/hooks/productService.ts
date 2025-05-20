@@ -38,3 +38,9 @@ export const updateProduct = async (id: number, updatedProduct: Product) => {
   const response = await axios.put<Product>(`${API_URL}/${id}`, updatedProduct);
   return response.data;
 };
+
+// Delete a product by ID
+export const deleteProduct = async (id: number) => {
+  const response = await axios.delete(`${API_URL}/${id}`);
+  return response.data;
+};
