@@ -99,7 +99,7 @@ export default function Home() {
       {loading ? (
         <div className="text-center py-8">Loading products...</div>
       ) : (
-        <ProductList data={filteredData} /> // Pass filteredData to ProductList
+        <ProductList data={filteredData} />
       )}
     </div>
   );

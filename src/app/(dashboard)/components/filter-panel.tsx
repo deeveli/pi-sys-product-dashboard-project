@@ -15,6 +15,8 @@ import { useState } from 'react';
 import { FilterPanelProps } from '@/data/app/interface';
 import { filterOptions } from '@/data/app/filterOptions';
 import { ChevronDown } from 'lucide-react';
+import { createProduct, Product } from '@/hooks/productService';
+import { AddProduct } from './createProductDialog';
 
 const FilterPanel: React.FC<FilterPanelProps> = ({
   onCategoryChange,
@@ -46,6 +48,10 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setSearchText(event.target.value);
     onSearchChange(event.target.value);
+  };
+
+  const handleCreateProduct = async (product: Product) => {
+    await createProduct(product);
   };
 
   return (
@@ -85,15 +91,7 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
             />
 
             {/* AddProduct */}
-            <Button
-              type="button"
-              variant="default"
-              size="lg"
-              // onClick={(s) => { /* Add product logic here */ }} // Add actual logic for adding product
-              disabled={false}
-            >
-              Add Product
-            </Button>
+            <AddProduct />
           </div>
         </div>
         <div className={cn('w-full h-[1px] bg-primary/40')} />
