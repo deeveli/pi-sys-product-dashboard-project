@@ -1,38 +1,53 @@
-import Link from 'next/link';
-import Balancer from 'react-wrap-balancer';
+'use client';
 
-import Icons from '@/components/icons';
-import { buttonVariants } from '@/components/ui/button';
+import { Button, buttonVariants } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
+import { Input } from '@/components/ui/input';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
+import { useState } from 'react';
+import { FilterPanelProps } from '@/data/app/interface';
+import { filterOptions } from '@/data/app/filterOptions';
+import { ChevronDown } from 'lucide-react';
 
+const FilterPanel: React.FC<FilterPanelProps> = ({
+  onCategoryChange,
+  onPriceChange,
+  onRatingChange,
+  onSearchChange,
+}) => {
+  const [category, setCategory] = useState('all');
+  const [price, setPrice] = useState('all');
+  const [rating, setRating] = useState('all');
+  const [searchText, setSearchText] = useState('');
 
+  // Handle changes in category, price, rating filters and pass to parent
+  const handleCategoryChange = (value: string) => {
+    setCategory(value);
+    onCategoryChange(value);
+  };
 
-const filterOptions = {
-  Category: [
-    { label: 'All', value: 'all' },
-    { label: 'Category 1', value: 'category1' },
-    { label: 'Category 2', value: 'category2' },
-    { label: 'Category 3', value: 'category3' },
-  ],
-  Price: [
-    { label: 'All', value: 'all' },
-    { label: 'Price 1', value: 'price1' },
-    { label: 'Price 2', value: 'price2' },
-    { label: 'Price 3', value: 'price3' },
-  ],
-  Rating: [
-    { label: 'All', value: 'all' },
-    { label: 'Rating 1', value: 'rating1' },
-    { label: 'Rating 2', value: 'rating2' },
-  ],
-  Product: [
-    { label: 'All', value: 'all' },
-    { label: 'Rating 1', value: 'rating1' },
-    { label: 'Rating 2', value: 'rating2' },
-  ],
-};
+  const handlePriceChange = (value: string) => {
+    setPrice(value);
+    onPriceChange(value);
+  };
 
-const FilterPanel = async () => {
+  const handleRatingChange = (value: string) => {
+    setRating(value);
+    onRatingChange(value);
+  };
+
+  const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchText(event.target.value);
+    onSearchChange(event.target.value);
+  };
+
   return (
     <div className={cn('')}>
       <div
@@ -49,58 +64,97 @@ const FilterPanel = async () => {
           {/* Product Header Title */}
           <div
             className={cn(
-              'flex min-w-40 h-full font-bold justify-start items-center',
-              'text-text-muted text-nowrap',
+              'flex min-w-40 h-full font-black text-2xl justify-start items-center',
+              'text-nowrap',
             )}
           >
-            Product Header Title
+            Products
           </div>
           <div
             className={cn(
-              'flex w-full flex-col md:flex-row justify-end space-y-2 md:space-y-0 space-x-4',
+              'flex w-full flex-col md:flex-row justify-end space-y-2 md:space-y-0 space-x-4 items-center',
             )}
           >
-            {' '}
             {/* SearchBox */}
-            <div
-              className={cn(
-                'flex rounded-full w-full md:w-96 h-full bg-primary/10 justify-start items-center py-2 px-4',
-                'text-text-muted',
-              )}
-            >
-              search box
-            </div>
+            <Input
+              type="text"
+              placeholder="Filter products..."
+              value={searchText}
+              onChange={handleSearchChange} // Correctly wired to handleSearchChange
+              className="max-w-md rounded-full h-full placeholder:text-text-muted"
+            />
+
             {/* AddProduct */}
-            <div
-              className={cn(
-                'flex rounded-full w-fit h-full bg-primary/10 justify-start items-center py-2 px-4',
-                'text-text-muted',
-              )}
+            <Button
+              type="button"
+              variant="default"
+              size="lg"
+              // onClick={(s) => { /* Add product logic here */ }} // Add actual logic for adding product
+              disabled={false}
             >
-              Add new product
-            </div>
+              Add Product
+            </Button>
           </div>
         </div>
         <div className={cn('w-full h-[1px] bg-primary/40')} />
         <div
           className={cn('flex flex-row w-full items-center justify-between')}
         >
+          {/* Dropdown Filtering Options */}
           <div
-            className={cn(
-              'grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4 w-full items-center justify-start',
-            )}
+            className={cn('flex flex-row w-full items-center justify-between')}
           >
-            {Object.entries(filterOptions).map(([sectionTitle, options]) => (
-              <div
-                key={sectionTitle}
-                className={cn(
-                  'flex flex-col rounded-full w-full bg-primary/10 p-2',
-                  'text-text-muted',
-                )}
-              >
-                <h4 className="text-sm font-semibold">{sectionTitle}</h4>
-              </div>
-            ))}
+            {/* Dropdown Filtering Options */}
+            <div
+              className={cn(
+                'grid grid-cols-2 md:grid-cols-6 gap-2 md:gap-4 w-full items-center justify-start',
+              )}
+            >
+              {Object.entries(filterOptions).map(([sectionTitle, options]) => (
+                <div key={sectionTitle}>
+                  <DropdownMenu>
+                    <DropdownMenuTrigger asChild>
+                      <Button
+                        variant="ghost"
+                        className="w-full justify-between text-sm font-semibold bg-primary/10 px-4 "
+                      >
+                        {/* Conditionally display the selected filter value or the section title */}
+                        {sectionTitle === 'Category' && category !== 'all'
+                          ? options.find((opt) => opt.value === category)
+                              ?.label || sectionTitle
+                          : sectionTitle === 'Price' && price !== 'all'
+                            ? options.find((opt) => opt.value === price)
+                                ?.label || sectionTitle
+                            : sectionTitle === 'Rating' && rating !== 'all'
+                              ? options.find((opt) => opt.value === rating)
+                                  ?.label || sectionTitle
+                              : sectionTitle}
+                        <ChevronDown size={15} className={cn('text-muted')} />
+                      </Button>
+                    </DropdownMenuTrigger>
+                    <DropdownMenuContent
+                      className={cn('shadow-lg border-none w-full')}
+                    >
+                      {options.map((option) => (
+                        <DropdownMenuItem
+                          key={option.value}
+                          onSelect={() => {
+                            if (sectionTitle === 'Category')
+                              handleCategoryChange(option.value);
+                            else if (sectionTitle === 'Price')
+                              handlePriceChange(option.value);
+                            else if (sectionTitle === 'Rating')
+                              handleRatingChange(option.value);
+                          }}
+                        >
+                          <DropdownMenuLabel>{option.label}</DropdownMenuLabel>
+                        </DropdownMenuItem>
+                      ))}
+                    </DropdownMenuContent>
+                  </DropdownMenu>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -109,18 +163,3 @@ const FilterPanel = async () => {
 };
 
 export default FilterPanel;
-
-
- {
-   /* <Link
-              href="https://github.com/deeveli/nextjs-starter-tailwind"
-              className={cn(buttonVariants({ variant: 'outline' }), 'gap-x-2')}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <span className={cn('font-medium')}>{stars}</span>
-              <Icons.star className={cn('h-4 w-4')} />
-              <span>on</span>
-              <Icons.gitHub className={cn('h-4 w-4')} />
-            </Link> */
- }
