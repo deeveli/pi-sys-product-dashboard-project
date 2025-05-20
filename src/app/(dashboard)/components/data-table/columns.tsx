@@ -1,21 +1,39 @@
+// components/data-table/columns.tsx
 import { Button } from '@/components/ui/button';
 import { Checkbox } from '@/components/ui/checkbox';
 import {
   DropdownMenu,
-  DropdownMenuCheckboxItem,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Input } from '@/components/ui/input';
-import { Product } from '@/hooks/productService';
+import { Product } from '@/hooks/productService'; // Assuming this path is correct
 import { cn } from '@/lib/utils';
 import { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown, MoreHorizontal, Star, StarHalfIcon, StarIcon } from 'lucide-react';
+import {
+  ArrowUpDown,
+  Copy,
+  Eye,
+  Heart,
+  MoreHorizontal,
+  Pencil,
+  Star,
+  StarHalfIcon,
+  StarIcon,
+  Trash2,
+} from 'lucide-react';
+import React from 'react';
+
+// Define a type for the meta object in the table
+declare module '@tanstack/react-table' {
+  interface TableMeta<TData> {
+    onEditClick: (product: Product) => void;
+  }
+}
 
 export const columns: ColumnDef<Product>[] = [
+  // Select Column
   {
     id: 'select',
     header: ({ table }) => (
@@ -42,6 +60,8 @@ export const columns: ColumnDef<Product>[] = [
     enableSorting: false,
     enableHiding: false,
   },
+
+  // Product Name Column
   {
     accessorKey: 'name',
     header: ({ column }) => (
@@ -54,6 +74,8 @@ export const columns: ColumnDef<Product>[] = [
     ),
     cell: ({ row }) => <div className="capitalize">{row.getValue('name')}</div>,
   },
+
+  // Category Column
   {
     accessorKey: 'category',
     header: ({ column }) => (
@@ -65,9 +87,13 @@ export const columns: ColumnDef<Product>[] = [
       </div>
     ),
     cell: ({ row }) => (
-      <div className="lowercase px-2 py-[0.3rem] items-center rounded-full  border border-primary w-fit flex">{row.getValue('category')}</div>
+      <div className="lowercase px-2 py-[0.3rem] items-center rounded-full border border-primary w-fit flex">
+        {row.getValue('category')}
+      </div>
     ),
   },
+
+  // Ratings Column
   {
     accessorKey: 'rating',
     header: ({ column }) => (
@@ -82,9 +108,9 @@ export const columns: ColumnDef<Product>[] = [
       const rating = row.getValue('rating');
 
       // Determine how many full, half, and outline stars
-      const fullStars = Math.floor(rating as number); // number of full stars (1, 2, 3, 4, or 5)
-      const halfStars = rating as number % 1 >= 0.5 ? 1 : 0; // 1 if half star is needed
-      const outlineStars = 5 - fullStars - halfStars; // remaining stars will be outline
+      const fullStars = Math.floor(rating as number);
+      const halfStars = (rating as number) % 1 >= 0.5 ? 1 : 0;
+      const outlineStars = 5 - fullStars - halfStars;
 
       const renderStars = () => {
         let stars = [];
@@ -128,10 +154,12 @@ export const columns: ColumnDef<Product>[] = [
       );
     },
   },
+
+  // Price Column
   {
     accessorKey: 'price',
     header: () => (
-      <div className=" flex flex-row gap-x-4 items-center text-right">
+      <div className="flex flex-row gap-x-4 items-center text-right">
         Price <ArrowUpDown size={15} color="grey" />
       </div>
     ),
@@ -145,33 +173,56 @@ export const columns: ColumnDef<Product>[] = [
       return <div className="text-left">{formatted}</div>;
     },
   },
+
+  // Actions Column
   {
     id: 'actions',
     enableHiding: false,
-    cell: ({ row }) => {
+    cell: ({ row, table }) => {
       const product = row.original;
+      const onEditClick = table.options.meta?.onEditClick; // Access the meta function
 
       return (
-        <DropdownMenu>
-          <DropdownMenuTrigger asChild>
-            <Button variant="ghost" className="h-8 w-8 p-0">
-              <span className="sr-only">Open menu</span>
-              <MoreHorizontal />
-            </Button>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
-            <DropdownMenuLabel>Actions</DropdownMenuLabel>
-            <DropdownMenuItem
-              onClick={() =>
-                navigator.clipboard.writeText(JSON.stringify(product))
-              }
-            >
-              Copy product info
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>View product</DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <>
+          <Button variant="ghost" className="h-8 w-8 p-0">
+            <span className="sr-only">Open menu</span>
+            <Heart size={18} color="#f48525" />
+          </Button>
+          <DropdownMenu>
+            <DropdownMenuTrigger asChild>
+              <Button variant="ghost" className="h-8 w-8 p-0">
+                <span className="sr-only">Open menu</span>
+                <MoreHorizontal />
+              </Button>
+            </DropdownMenuTrigger>
+            <DropdownMenuContent align="end" className="border-none shadow-lg">
+              <DropdownMenuItem
+                onClick={() =>
+                  navigator.clipboard.writeText(JSON.stringify(product))
+                }
+                className="flex w-full cursor-pointer gap-2 hover:bg-primary/20"
+              >
+                <Copy size={15} color="#f48525" /> Copy
+              </DropdownMenuItem>
+              <DropdownMenuSeparator className="bg-primary/20" />
+              <DropdownMenuItem className="flex w-full cursor-pointer gap-2">
+                <Eye size={15} color="#f48525" />
+                View
+              </DropdownMenuItem>
+              <DropdownMenuItem
+                className="flex w-full cursor-pointer gap-2"
+                onClick={() => onEditClick?.(product)} // Pass the whole product object
+              >
+                <Pencil size={15} color="#f48525" />
+                Edit
+              </DropdownMenuItem>
+              <DropdownMenuItem className="flex w-full cursor-pointer gap-2">
+                <Trash2 size={15} color="#f48525" />
+                Delete
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </>
       );
     },
   },

@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
-import { CreateInputForm } from './form/create';
+import { CreateInputForm } from '../form/create';
 import { Separator } from '@/components/ui/separator';
 
 export function AddProduct() {

@@ -4,6 +4,7 @@ import { useEffect, useState } from 'react';
 import FilterPanel from './components/filter-panel';
 import ProductList from './components/productList';
 import { fetchProducts, Product } from '@/hooks/productService';
+import { cn } from '@/lib/utils';
 
 export default function Home() {
   const [data, setData] = useState<Product[]>([]);
@@ -97,9 +98,18 @@ export default function Home() {
         onSearchChange={handleSearchChange}
       />
       {loading ? (
-        <div className="text-center py-8">Loading products...</div>
+        <div
+          className={cn(
+            'bg-white flex h-fit w-full flex-col',
+            'rounded-lg p-4 space-y-4',
+            'text-muted italic text-sm',
+            'text-center py-8',
+          )}
+        >
+          Loading products...
+        </div>
       ) : (
-        <ProductList data={filteredData} />
+        <ProductList data={filteredData} onProductUpdated={() => {}} />
       )}
     </div>
   );

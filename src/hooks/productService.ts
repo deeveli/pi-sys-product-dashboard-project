@@ -3,7 +3,7 @@ import axios from 'axios';
 const API_URL = 'https://mock-data-josw.onrender.com/products';
 
 export interface Product {
-  id?: string;
+  id?: number;
   name: string;
   description?: string;
   price: number;
@@ -25,4 +25,16 @@ export const fetchProducts = async (): Promise<Product[]> => {
 export const createProduct = async (product: Product) => {
   const res = await axios.post<Product>(API_URL, product);
   return res.data;
+};
+
+// Get a product by ID
+export const getProductById = async (id: number) => {
+  const response = await axios.get<Product>(`${API_URL}/${id}`);
+  return response.data;
+};
+
+// Update a product by ID
+export const updateProduct = async (id: number, updatedProduct: Product) => {
+  const response = await axios.put<Product>(`${API_URL}/${id}`, updatedProduct);
+  return response.data;
 };

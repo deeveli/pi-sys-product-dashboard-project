@@ -16,7 +16,7 @@ import { FilterPanelProps } from '@/data/app/interface';
 import { filterOptions } from '@/data/app/filterOptions';
 import { ChevronDown } from 'lucide-react';
 import { createProduct, Product } from '@/hooks/productService';
-import { AddProduct } from './createProductDialog';
+import { AddProduct } from './dialogs/createProduct';
 
 const FilterPanel: React.FC<FilterPanelProps> = ({
   onCategoryChange,
