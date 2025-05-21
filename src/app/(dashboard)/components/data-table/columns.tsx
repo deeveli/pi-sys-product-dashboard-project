@@ -205,16 +205,21 @@ export const getProductColumns = ({
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="ghost" className="h-8 w-8 p-0">
+              <Button
+                variant="ghost"
+                className="h-8 w-8 p-0"
+                onClick={(e) => e.stopPropagation()}
+              >
                 <span className="sr-only">Open menu</span>
                 <MoreHorizontal />
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end" className="border-none shadow-lg">
               <DropdownMenuItem
-                onClick={() =>
-                  navigator.clipboard.writeText(JSON.stringify(product))
-                }
+                onClick={(e) => {
+                  e.stopPropagation();
+                  navigator.clipboard.writeText(JSON.stringify(product));
+                }}
                 className="flex w-full cursor-pointer gap-2 hover:bg-primary/20"
               >
                 <Copy size={15} color="#f48525" /> Copy
