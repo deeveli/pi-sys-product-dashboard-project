@@ -8,7 +8,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { Product } from '@/hooks/productService'; // Assuming this path is correct
+import { Product } from '@/hooks/useProductService'; // Assuming this path is correct
 import { cn } from '@/lib/utils';
 import { ColumnDef } from '@tanstack/react-table';
 import {

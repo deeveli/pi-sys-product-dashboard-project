@@ -13,7 +13,11 @@ import { Label } from '@/components/ui/label';
 import { CreateInputForm } from '../form/create';
 import { Separator } from '@/components/ui/separator';
 import React, { useEffect, useState } from 'react';
-import { deleteProduct, getProductById, Product } from '@/hooks/productService';
+import {
+  deleteProduct,
+  getProductById,
+  Product,
+} from '@/hooks/useProductService';
 import { ViewForm } from '../form/view';
 import { Button } from '@/components/ui/button';
 import { CircleX, Cross, Crosshair, Trash2Icon } from 'lucide-react';
@@ -25,10 +29,13 @@ export interface DeleteProductProps {
   onOpenChange: (open: boolean) => void;
 }
 
-export const DeleteProduct: React.FC<DeleteProductProps> = ({ productId, isOpen, onOpenChange }) => {
+export const DeleteProduct: React.FC<DeleteProductProps> = ({
+  productId,
+  isOpen,
+  onOpenChange,
+}) => {
   const [isLoading, setIsLoading] = useState(true);
   const [product, setProduct] = useState<Product>();
-
 
   useEffect(() => {
     const fetchAndSetProduct = async () => {
@@ -51,7 +58,7 @@ export const DeleteProduct: React.FC<DeleteProductProps> = ({ productId, isOpen,
           title: 'Product deleted',
           description: `The product ${product?.name} has been deleted.`,
         });
-        // onOpenChange(false);
+        onOpenChange(false);
       } else {
         console.log('Error:', deletedProduct);
         toast({
@@ -68,8 +75,7 @@ export const DeleteProduct: React.FC<DeleteProductProps> = ({ productId, isOpen,
         variant: 'destructive',
       });
     }
-  }
-
+  };
 
   const handleCancel = () => {
     onOpenChange(false);
@@ -95,13 +101,18 @@ export const DeleteProduct: React.FC<DeleteProductProps> = ({ productId, isOpen,
             </DialogHeader>
             <Separator className="-mt-2" />
             <DialogFooter>
-              <Button className="flex gap-2 items-center" onClick={() => {
-                    if (product?.id !== undefined)
-                      handleDelete(product.id);
-                  }}>
+              <Button
+                className="flex gap-2 items-center"
+                onClick={() => {
+                  if (product?.id !== undefined) handleDelete(product.id);
+                }}
+              >
                 <Trash2Icon size={15} color="white" /> Delete
               </Button>
-              <Button className="flex gap-2 items-center bg-black hover:bg-black/80" onClick={handleCancel}>
+              <Button
+                className="flex gap-2 items-center bg-black hover:bg-black/80"
+                onClick={handleCancel}
+              >
                 <CircleX size={15} color="white" /> Cancel
               </Button>
             </DialogFooter>
@@ -110,5 +121,5 @@ export const DeleteProduct: React.FC<DeleteProductProps> = ({ productId, isOpen,
       )}
     </>
   );
-}
+};
 

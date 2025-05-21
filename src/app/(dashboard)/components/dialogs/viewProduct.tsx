@@ -13,7 +13,7 @@ import { Label } from '@/components/ui/label';
 import { CreateInputForm } from '../form/create';
 import { Separator } from '@/components/ui/separator';
 import React, { useEffect, useState } from 'react';
-import { getProductById, Product } from '@/hooks/productService';
+import { getProductById, Product } from '@/hooks/useProductService';
 import { ViewForm } from '../form/view';
 
 export interface ViewProductProps {

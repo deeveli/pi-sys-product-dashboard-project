@@ -9,7 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Product } from '@/hooks/productService';
+import { Product } from '@/hooks/useProductService';
 import { cn } from '@/lib/utils';
 import {
   ColumnFiltersState,
@@ -278,8 +278,11 @@ const ProductList: React.FC<DataProps> = ({ data, onProductUpdated }) => {
     // Price Column
     {
       accessorKey: 'price',
-      header: () => (
-        <div className=" flex flex-row gap-x-4 items-center text-right">
+      header: ({ column }) => (
+        <div
+          className="flex flex-row gap-x-4 items-center text-right"
+          onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+        >
           Price <ArrowUpDown size={15} color="grey" />
         </div>
       ),

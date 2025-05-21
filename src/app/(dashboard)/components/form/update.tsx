@@ -18,7 +18,7 @@ import {
 import { Input } from '@/components/ui/input';
 import { toast } from '@/components/ui/use-toast';
 import { cn } from '@/lib/utils';
-import { getProductById, updateProduct, Product } from '@/hooks/productService'; // Import getProductById and updateProduct
+import { getProductById, updateProduct, Product } from '@/hooks/useProductService'; // Import getProductById and updateProduct
 import { Separator } from '@/components/ui/separator';
 
 // Zod schema for all form fields

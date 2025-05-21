@@ -11,23 +11,55 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FilterPanelProps } from '@/data/app/interface';
-import { filterOptions } from '@/data/app/filterOptions';
-import { ChevronDown } from 'lucide-react';
-import { createProduct, Product } from '@/hooks/productService';
+import { ChevronDown, Trash2 } from 'lucide-react';
+import { createProduct, Product } from '@/hooks/useProductService';
 import { AddProduct } from './dialogs/createProduct';
+import { FiHeart } from 'react-icons/fi';
 
 const FilterPanel: React.FC<FilterPanelProps> = ({
   onCategoryChange,
   onPriceChange,
   onRatingChange,
   onSearchChange,
+  categoryList,
 }) => {
   const [category, setCategory] = useState('all');
   const [price, setPrice] = useState('all');
   const [rating, setRating] = useState('all');
   const [searchText, setSearchText] = useState('');
+
+  // --- Dynamic filter options state ---
+  const [dynamicFilterOptions, setDynamicFilterOptions] = useState<any>({});
+
+  useEffect(() => {
+    const newFilterOptions: any = {
+      Category: [{ label: 'All', value: 'all' }],
+      Price: [
+        { label: 'All', value: 'all' },
+        { label: 'Under GH¢20', value: 'under20' },
+        { label: 'Under GH¢50', value: 'under50' },
+        { label: 'GH¢50 & Above', value: 'above50' },
+      ],
+      Rating: [
+        { label: 'All', value: 'all' },
+        { label: '1', value: '1' },
+        { label: '2', value: '2' },
+        { label: '3', value: '3' },
+        { label: '4', value: '4' },
+        { label: '5', value: '5' },
+      ],
+    };
+
+    if (categoryList && categoryList.length > 0) {
+      categoryList.forEach((cat) => {
+        newFilterOptions.Category.push({ label: cat, value: cat });
+      });
+    }
+
+    setDynamicFilterOptions(newFilterOptions);
+  }, [categoryList]);
 
   // Handle changes in category, price, rating filters and pass to parent
   const handleCategoryChange = (value: string) => {
@@ -98,7 +130,6 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
         <div
           className={cn('flex flex-row w-full items-center justify-between')}
         >
-          {/* Dropdown Filtering Options */}
           <div
             className={cn('flex flex-row w-full items-center justify-between')}
           >
@@ -108,50 +139,76 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
                 'grid grid-cols-2 md:grid-cols-6 gap-2 md:gap-4 w-full items-center justify-start',
               )}
             >
-              {Object.entries(filterOptions).map(([sectionTitle, options]) => (
-                <div key={sectionTitle}>
-                  <DropdownMenu>
-                    <DropdownMenuTrigger asChild>
-                      <Button
-                        variant="ghost"
-                        className="w-full justify-between text-sm font-semibold bg-primary/10 px-4 "
-                      >
-                        {/* Conditionally display the selected filter value or the section title */}
-                        {sectionTitle === 'Category' && category !== 'all'
-                          ? options.find((opt) => opt.value === category)
-                              ?.label || sectionTitle
-                          : sectionTitle === 'Price' && price !== 'all'
-                            ? options.find((opt) => opt.value === price)
-                                ?.label || sectionTitle
-                            : sectionTitle === 'Rating' && rating !== 'all'
-                              ? options.find((opt) => opt.value === rating)
-                                  ?.label || sectionTitle
-                              : sectionTitle}
-                        <ChevronDown size={15} className={cn('text-muted')} />
-                      </Button>
-                    </DropdownMenuTrigger>
-                    <DropdownMenuContent
-                      className={cn('shadow-lg border-none w-full')}
-                    >
-                      {options.map((option) => (
-                        <DropdownMenuItem
-                          key={option.value}
-                          onSelect={() => {
-                            if (sectionTitle === 'Category')
-                              handleCategoryChange(option.value);
-                            else if (sectionTitle === 'Price')
-                              handlePriceChange(option.value);
-                            else if (sectionTitle === 'Rating')
-                              handleRatingChange(option.value);
-                          }}
+              {Object.entries(dynamicFilterOptions).map(
+                ([sectionTitle, options]) => (
+                  <div key={sectionTitle}>
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button
+                          variant="ghost"
+                          className="w-full justify-between text-sm font-semibold bg-primary/10 px-4 "
                         >
-                          <DropdownMenuLabel>{option.label}</DropdownMenuLabel>
-                        </DropdownMenuItem>
-                      ))}
-                    </DropdownMenuContent>
-                  </DropdownMenu>
-                </div>
-              ))}
+                          {/* Conditionally display the selected filter value or the section title */}
+                          {sectionTitle === 'Category' && category !== 'all'
+                            ? (
+                                options as { label: string; value: string }[]
+                              ).find((opt) => opt.value === category)?.label ||
+                              sectionTitle
+                            : sectionTitle === 'Price' && price !== 'all'
+                              ? (
+                                  options as { label: string; value: string }[]
+                                ).find((opt) => opt.value === price)?.label ||
+                                sectionTitle
+                              : sectionTitle === 'Rating' && rating !== 'all'
+                                ? (
+                                    options as {
+                                      label: string;
+                                      value: string;
+                                    }[]
+                                  ).find((opt) => opt.value === rating)
+                                    ?.label || sectionTitle
+                                : sectionTitle}
+                          <ChevronDown size={15} className={cn('text-muted')} />
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent
+                        className={cn(
+                          'shadow-lg border-none w-full h-[20vh] overflow-scroll cursor-pointer',
+                        )}
+                      >
+                        {(options as { label: string; value: string }[]).map(
+                          (option) => (
+                            <DropdownMenuItem
+                              className={cn('')}
+                              key={option.value}
+                              onSelect={() => {
+                                if (sectionTitle === 'Category')
+                                  handleCategoryChange(option.value);
+                                else if (sectionTitle === 'Price')
+                                  handlePriceChange(option.value);
+                                else if (sectionTitle === 'Rating')
+                                  handleRatingChange(option.value);
+                              }}
+                            >
+                              <DropdownMenuLabel>
+                                {option.label}
+                              </DropdownMenuLabel>
+                            </DropdownMenuItem>
+                          ),
+                        )}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+                  </div>
+                ),
+              )}
+            </div>
+            <div className={cn('flex flex-row items-center justify-end gap-1')}>
+              <Button variant={'ghost'} className="size-9 p-1">
+                <Trash2 size={15} color="#f48525" />
+              </Button>
+              <Button variant={'ghost'} className="size-9 p-1">
+                <FiHeart size={15} color="#f48525" />
+              </Button>
             </div>
           </div>
         </div>
