@@ -1,10 +1,10 @@
-import { createEnv } from '@t3-oss/env-nextjs'
-import { z } from 'zod'
+import { createEnv } from '@t3-oss/env-nextjs';
+import { z } from 'zod';
 
 /**
  * Transform an empty string to undefined
  */
-const emptyStringToUndefined = z.literal('').transform(() => undefined)
+const emptyStringToUndefined = z.literal('').transform(() => undefined);
 
 /**
  * An optional string type that is at least one character long, or transformed
@@ -15,7 +15,7 @@ const optionalString = z
   .trim()
   .min(1)
   .optional()
-  .or(emptyStringToUndefined)
+  .or(emptyStringToUndefined);
 
 export const env = createEnv({
   /**
@@ -87,4 +87,4 @@ export const env = createEnv({
    * This is especially useful for Docker builds.
    */
   skipValidation: !!process.env.SKIP_ENV_VALIDATION,
-})
+});

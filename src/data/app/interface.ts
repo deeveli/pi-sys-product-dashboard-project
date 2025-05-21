@@ -1,4 +1,4 @@
-import { Product } from '@/hooks/useProductService';
+import type { Product } from '@/hooks/useProductService';
 
 export interface FilterPanelProps {
   onCategoryChange: (value: string) => void;

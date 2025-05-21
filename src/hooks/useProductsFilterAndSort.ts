@@ -1,5 +1,7 @@
-import { useState, useEffect, useMemo } from 'react';
-import { Product, fetchProducts, getCategory } from './useProductService';
+import { useEffect, useMemo, useState } from 'react';
+
+import type { Product } from './useProductService';
+import { fetchProducts, getCategory } from './useProductService';
 
 interface UseProductsFilterAndSortResult {
   loading: boolean;
@@ -71,7 +73,7 @@ export const useProductsFilterAndSort = (): UseProductsFilterAndSortResult => {
     ratingFilter,
     searchQuery,
     sortOrder,
-  ]); // Re-fetch data when filters/pagination change
+  ]);
 
   // Calculate total pages
   const totalPages = useMemo(() => {

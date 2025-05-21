@@ -1,16 +1,19 @@
-import { useState, useMemo } from 'react';
-import {
+import type {
   ColumnDef,
   ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+} from '@tanstack/react-table';
+import {
   getCoreRowModel,
   getFilteredRowModel,
   getPaginationRowModel,
   getSortedRowModel,
-  SortingState,
   useReactTable,
-  VisibilityState,
 } from '@tanstack/react-table';
-import { Product } from '@/hooks/useProductService'; // Adjust path if necessary
+import { useState } from 'react';
+
+import type { Product } from '@/hooks/useProductService'; // Adjust path if necessary
 
 interface UseProductTableProps {
   data: Product[];
@@ -35,7 +38,7 @@ export const useProductTable = ({ data, columns }: UseProductTableProps) => {
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
-    // onRowSelectionChange: setRowSelection,
+    onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
