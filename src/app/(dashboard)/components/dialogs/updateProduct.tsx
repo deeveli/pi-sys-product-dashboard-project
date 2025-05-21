@@ -37,6 +37,7 @@ export const UpdateProduct: React.FC<UpdateProductProps> = ({
         <UpdateInputForm
           productId={productId}
           onSubmissionSuccess={onProductUpdated}
+          onOpenChange={onOpenChange}
         />
       </DialogContent>
     </Dialog>

@@ -23,12 +23,14 @@ export function AddProduct() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px] md:max-w-[500px]">
         <DialogHeader className="mb-4">
-          <DialogTitle className='font-extrabold text-xl'>Add New Product</DialogTitle>
+          <DialogTitle className="font-extrabold text-xl">
+            Add New Product
+          </DialogTitle>
           <DialogDescription className="text-sm text-muted italic">
             Add a new product to the inventory.
           </DialogDescription>
         </DialogHeader>
-        <Separator className='-mt-2'/>
+        <Separator className="-mt-2" />
         <CreateInputForm />
       </DialogContent>
     </Dialog>

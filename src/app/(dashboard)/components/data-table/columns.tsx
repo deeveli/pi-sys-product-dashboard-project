@@ -95,7 +95,7 @@ export const getProductColumns = ({
       </div>
     ),
     cell: ({ row }) => (
-      <div className="lowercase px-2 py-[0.3rem] items-center rounded-full border border-primary w-fit flex">
+      <div className="lowercase text-xs text-muted bg-muted/5 px-2 py-[0.3rem] items-center rounded-full  border-primary w-fit flex">
         {row.getValue('category')}
       </div>
     ),

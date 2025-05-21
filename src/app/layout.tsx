@@ -9,6 +9,7 @@ import Header from '@/components/header';
 import { ThemeProvider } from '@/components/providers';
 import { seo } from '@/data/meta';
 import { cn } from '@/lib/utils';
+import { Toaster } from '@/components/ui/toaster';
 
 const fontSans = PlusJakartaSans({
   subsets: ['latin'],
@@ -41,6 +42,7 @@ export default function RootLayout({
             >
               {children}
             </main>
+            <Toaster />
             <Footer />
             <Analytics />{' '}
           </div>

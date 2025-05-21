@@ -42,11 +42,13 @@ const FormSchema = z.object({
 export interface UpdateInputFormProps {
   productId: number | null;
   onSubmissionSuccess?: () => void;
+  onOpenChange: (open: boolean) => void;
 }
 
 export const UpdateInputForm: React.FC<UpdateInputFormProps> = ({
   productId,
   onSubmissionSuccess,
+  onOpenChange,
 }) => {
   const [isLoading, setIsLoading] = useState(true);
 
@@ -109,6 +111,7 @@ export const UpdateInputForm: React.FC<UpdateInputFormProps> = ({
           if (onSubmissionSuccess) {
             onSubmissionSuccess();
           }
+          onOpenChange(false);
         } else {
           console.log('Error:', data);
           toast({
@@ -176,67 +179,73 @@ export const UpdateInputForm: React.FC<UpdateInputFormProps> = ({
 
   return (
     <>
-      {
-      isLoading?(
+      {isLoading ? (
         <div className="flex items-center justify-center h-full">
           <p className="text-sm text-muted-foreground">Loading...</p>
         </div>
       ) : (
         <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="w-full space-y-6">
-          {createFormQuestions.map((question) => (
-            <FormField
-              key={question.name}
-              control={form.control}
-              name={question.name}
-              render={({ field }) => (
-                <FormItem className={cn('flex flex-col gap-y-2')}>
-                  <FormLabel className={cn('font-bold')}>
-                    {question.label}
-                  </FormLabel>
-                  <div>
-                    <FormControl>
-                      <Input
-                        className={cn('rounded-full placeholder:italic text-xs')}
-                        type={question.type}
-                        placeholder={question.description}
-                        {...field}
-                        value={
-                          field.value === 0 && question.type === 'number'
-                            ? ''
-                            : field.value
-                        }
-                        onChange={(e) => {
-                          if (question.type === 'number') {
-                            field.onChange(
-                              e.target.value === '' ? 0 : Number(e.target.value),
-                            );
-                          } else {
-                            field.onChange(e.target.value);
-                          }
-                        }}
-                      />
-                    </FormControl>
-                    <FormMessage className="text-xs" /> {/* validation errors */}
-                  </div>
-                </FormItem>
-              )}
-            />
-          ))}
-          <Separator className="" />
-          <Button
-            className="w-full flex"
-            variant={'default'}
-            size={'lg'}
-            type="submit"
+          <form
+            onSubmit={form.handleSubmit(onSubmit)}
+            className="w-full space-y-6"
           >
-            {productId ? 'Update Product' : 'Create Product'}{' '}
-            {/* Dynamic button text */}
-          </Button>
-        </form>
-      </Form>
-      )
-    }
+            {createFormQuestions.map((question) => (
+              <FormField
+                key={question.name}
+                control={form.control}
+                name={question.name}
+                render={({ field }) => (
+                  <FormItem className={cn('flex flex-col gap-y-2')}>
+                    <FormLabel className={cn('font-bold')}>
+                      {question.label}
+                    </FormLabel>
+                    <div>
+                      <FormControl>
+                        <Input
+                          className={cn(
+                            'rounded-full placeholder:italic text-xs',
+                          )}
+                          type={question.type}
+                          placeholder={question.description}
+                          {...field}
+                          value={
+                            field.value === 0 && question.type === 'number'
+                              ? ''
+                              : field.value
+                          }
+                          onChange={(e) => {
+                            if (question.type === 'number') {
+                              field.onChange(
+                                e.target.value === ''
+                                  ? 0
+                                  : Number(e.target.value),
+                              );
+                            } else {
+                              field.onChange(e.target.value);
+                            }
+                          }}
+                        />
+                      </FormControl>
+                      <FormMessage className="text-xs" />{' '}
+                      {/* validation errors */}
+                    </div>
+                  </FormItem>
+                )}
+              />
+            ))}
+            <Separator className="" />
+            <Button
+              className="w-full flex"
+              variant={'default'}
+              size={'lg'}
+              type="submit"
+            >
+              {productId ? 'Update Product' : 'Create Product'}{' '}
+              {/* Dynamic button text */}
+            </Button>
+          </form>
+        </Form>
+      )}
     </>
   );
 };

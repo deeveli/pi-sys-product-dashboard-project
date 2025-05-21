@@ -51,27 +51,13 @@ export function CreateInputForm() {
   });
 
   async function onSubmit(data: z.infer<typeof FormSchema>) {
-    toast({
-      title: 'You submitted the following values:',
-      description: (
-        <pre className="mt-2 w-[340px] rounded-md bg-slate-950 p-4">
-          <code className="text-white">{JSON.stringify(data, null, 2)}</code>
-        </pre>
-      ),
-    });
-    console.log('Form data:', data);
-
-    const success = createProduct(data);
-    if (await success) {
-      console.log('Success:', data);
-
+    const success = await createProduct(data);
+    if (success) {
       toast({
         title: 'Product created successfully!',
         description: 'Your product has been added to the inventory.',
       });
     } else {
-      console.log('Failed', data);
-
       toast({
         title: 'Error creating product',
         description: 'There was an error creating your product.',

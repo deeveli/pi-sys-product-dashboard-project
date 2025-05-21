@@ -248,7 +248,7 @@ const ProductList: React.FC<DataProps> = ({
           />
         )}
 
-        {/* Render the ViewProduct modal */}
+        {/* Render the DeleteProduct modal */}
         {isDeleteOpen && (
           <DeleteProduct
             productId={deleteProductId}
