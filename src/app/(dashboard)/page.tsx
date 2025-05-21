@@ -37,41 +37,32 @@ export default function Home() {
     applyFiltersAndPagination,
   } = useProductStore();
 
-  // Fetch products and initialize store on mount
+  // Initial data fetch on mount
   useEffect(() => {
-    const fetchAndSetProducts = async () => {
+    const initializeProducts = async () => {
       setLoading(true);
       try {
         const { products: fetchedProducts } = await fetchProducts();
-        setProducts(fetchedProducts);
         const uniqueCategories = await getCategory();
+
+        setProducts(fetchedProducts);
         setCategories(uniqueCategories);
         applyFiltersAndPagination(fetchedProducts);
       } catch (error) {
-        console.error('Failed to fetch products:', error);
+        console.error('Product fetch failed:', error);
       } finally {
         setLoading(false);
       }
     };
 
-    fetchAndSetProducts();
-  }, [setLoading, setProducts, setCategories, applyFiltersAndPagination]);
+    initializeProducts();
+  }, []);
 
-  const handleCategoryChange = (value: string) => {
-    setCategoryFilter(value);
-  };
-
-  const handlePriceChange = (value: string) => {
-    setPriceFilter(value);
-  };
-
-  const handleRatingChange = (value: string) => {
-    setRatingFilter(value);
-  };
-
-  const handleSearchChange = (value: string) => {
-    setSearchFilter(value);
-  };
+  // Handlers
+  const handleCategoryChange = (value: string) => setCategoryFilter(value);
+  const handlePriceChange = (value: string) => setPriceFilter(value);
+  const handleRatingChange = (value: string) => setRatingFilter(value);
+  const handleSearchChange = (value: string) => setSearchFilter(value);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
@@ -93,6 +84,7 @@ export default function Home() {
         onRatingChange={handleRatingChange}
         onSearchChange={handleSearchChange}
       />
+
       {loading ? (
         <div
           className={cn(
@@ -101,7 +93,6 @@ export default function Home() {
           )}
         >
           <div className="size-40">
-            {' '}
             <Lottie
               className="flex h-full w-auto items-center justify-center"
               lottieFile={LoadingLottie}

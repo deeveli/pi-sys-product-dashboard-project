@@ -27,26 +27,22 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" suppressHydrationWarning className={fontSans.variable}>
-      <body>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={cn(fontSans.variable, 'light')}
+      style={{ colorScheme: 'light' }}
+    >
+      <body className="font-sans">
         <ThemeProvider attribute="class" defaultTheme="light">
-          <div
-            className={cn(
-              'flex h-full min-h-screen w-full flex-col justify-start',
-              'bg-primary/30',
-            )}
-          >
+          <div className="flex size-full min-h-screen flex-col justify-start bg-primary/30">
             <Header />
-            <main
-              className={cn(
-                'container h-full items-start justify-start overflow-clip rounded-lg px-2 py-4 md:px-8 md:py-0',
-              )}
-            >
+            <main className="container h-full items-start justify-start text-clip rounded-lg px-2 py-4 md:px-8 md:py-0">
               {children}
             </main>
             <Toaster />
             <Footer />
-            <Analytics />{' '}
+            <Analytics />
           </div>
         </ThemeProvider>
       </body>
