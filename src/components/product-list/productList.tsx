@@ -2,6 +2,7 @@
 
 import { flexRender } from '@tanstack/react-table';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import dynamic from 'next/dynamic';
 import React, { useMemo } from 'react';
 
 import { DeleteProduct } from '@/components/dialogs/deleteProduct';
@@ -31,6 +32,10 @@ import { cn } from '@/lib/utils';
 
 import { getProductColumns } from '../data-table/columns';
 
+const Lottie = dynamic(
+  () => import('../../components/lottie-animations/lottie'),
+  { ssr: false },
+);
 export interface DataProps {
   data: Product[];
   onProductUpdated: () => void;
@@ -161,8 +166,7 @@ const ProductList: React.FC<DataProps> = ({
                     )}
                   >
                     <div className="size-40">
-                      Loading...
-                      {/* <LottieAnimation className="flex h-full w-auto items-center justify-center " /> */}
+                      <Lottie className="flex h-full w-auto items-center justify-center" />
                     </div>
                   </div>
                 </TableCell>
