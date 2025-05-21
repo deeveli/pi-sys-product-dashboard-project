@@ -51,6 +51,8 @@ import {
 import React from 'react';
 import { ViewProduct } from './dialogs/viewProduct';
 import { DeleteProduct } from './dialogs/deleteProduct';
+import { FaHeart } from 'react-icons/fa';
+import { FiHeart } from 'react-icons/fi';
 
 export interface DataProps {
   data: Product[];
@@ -76,11 +78,44 @@ const ProductList: React.FC<DataProps> = ({ data, onProductUpdated }) => {
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [deleteProductId, setDeleteProductId] = useState<number | null>(null);
 
+  // State for controlling the Favorite Product Toggle
+  const [isFavoriteToggled, setIsFavoriteToggled] = useState(false);
+  const [favoriteProductId, setFavoriteProductId] = useState<number | null>(
+    null,
+  );
+
+  // State to store an array of favorite product IDs
+  const [favoriteProductIds, setFavoriteProductIds] = useState<number[]>([]);
+
   useEffect(() => {
     if (data) {
       setLoading(false);
     }
   }, [data]);
+
+  // Load favorites from localStorage on component mount
+  useEffect(() => {
+    try {
+      const storedFavorites = localStorage.getItem('favoriteProductIds');
+      if (storedFavorites) {
+        setFavoriteProductIds(JSON.parse(storedFavorites));
+      }
+    } catch (error) {
+      console.error('Failed to load favorites from localStorage:', error);
+    }
+  }, []);
+
+  // Save favorites to localStorage whenever favoriteProductIds changes
+  useEffect(() => {
+    try {
+      localStorage.setItem(
+        'favoriteProductIds',
+        JSON.stringify(favoriteProductIds),
+      );
+    } catch (error) {
+      console.error('Failed to save favorites to localStorage:', error);
+    }
+  }, [favoriteProductIds]);
 
   // Callback function to open the Edit Product modal
   const handleEditClick = (productId: number) => {
@@ -98,6 +133,17 @@ const ProductList: React.FC<DataProps> = ({ data, onProductUpdated }) => {
   const handleDeleteClick = (productId: number) => {
     setDeleteProductId(productId);
     setIsDeleteOpen(true);
+  };
+
+  // --- Callback function to toggle the Favorite status ---
+  const handleFavoriteClick = (productId: number) => {
+    setFavoriteProductIds((prevFavorites) => {
+      if (prevFavorites.includes(productId)) {
+        return prevFavorites.filter((id) => id !== productId);
+      } else {
+        return [...prevFavorites, productId];
+      }
+    });
   };
 
   const columns: ColumnDef<Product>[] = [
@@ -254,12 +300,23 @@ const ProductList: React.FC<DataProps> = ({ data, onProductUpdated }) => {
       enableHiding: false,
       cell: ({ row }) => {
         const product = row.original;
+        const isFavorite = favoriteProductIds.includes(product?.id as number);
 
         return (
-          <>
-            <Button variant="ghost" className="h-8 w-8 p-0">
+          <div className={cn('flex items-center gap-x-2')}>
+            <Button
+              variant="ghost"
+              className="h-8 w-8 p-0"
+              onClick={() => {
+                if (product?.id !== undefined) handleFavoriteClick(product.id);
+              }}
+            >
               <span className="sr-only">Open menu</span>
-              <Heart size={18} color="#f48525" />
+              {isFavorite ? (
+                <FaHeart size={18} color="#f48525" />
+              ) : (
+                <FiHeart size={18} color="grey" style={{ opacity: 0.4 }} />
+              )}
             </Button>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
@@ -311,7 +368,7 @@ const ProductList: React.FC<DataProps> = ({ data, onProductUpdated }) => {
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
-          </>
+          </div>
         );
       },
     },

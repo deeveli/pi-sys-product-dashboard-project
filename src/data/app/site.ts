@@ -5,9 +5,10 @@ export const BASE_URL =
 
 export const siteConfig = {
   name: 'deeveli',
-  title: 'Next.js Starter Template',
+  title: 'PiSys Product Dashboard',
   description:
-    'Next.js bootstrapped by Tailwind CSS and Typescript setup with useful development features.',
+    'A simple product dashboard template built with Next.js 13, TypeScript, Tailwind CSS, and Radix UI.',
+  url: BASE_URL,
   author: {
     name: 'Divine Elikplim Abah',
     url: 'https://deeveli.vercel.app',
