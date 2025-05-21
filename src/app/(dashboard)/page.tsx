@@ -1,14 +1,15 @@
 'use client';
 
-import FilterPanel from './components/filter-panel/filter-panel';
-import ProductList from './components/productList';
-import { cn } from '@/lib/utils';
-import { useProductsFilterAndSort } from '@/hooks/useProductsFilterAndSort';
-import { useProductStore } from '@/store/productStore';
 import { useEffect } from 'react';
-import { fetchProducts, getCategory, Product } from '@/hooks/useProductService';
-import Lottie from './components/lottie-animations/lottie';
+
 import LoadingLottie from '@/animations/loading-lottie.json';
+import { fetchProducts, getCategory } from '@/hooks/useProductService';
+import { cn } from '@/lib/utils';
+import { useProductStore } from '@/store/productStore';
+
+import FilterPanel from '../../components/filter-panel/filter-panel';
+import Lottie from '../../components/lottie-animations/lottie';
+import ProductList from '../../components/product-list/productList';
 
 export default function Home() {
   const {
@@ -36,7 +37,7 @@ export default function Home() {
     const fetchAndSetProducts = async () => {
       setLoading(true);
       try {
-        const { products: fetchedProducts, totalCount } = await fetchProducts();
+        const { products: fetchedProducts } = await fetchProducts();
         setProducts(fetchedProducts);
         const uniqueCategories = await getCategory();
         setCategories(uniqueCategories);
@@ -79,7 +80,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col h-full py-4 space-y-4">
+    <div className="flex h-full flex-col space-y-4 py-4">
       <FilterPanel
         categoryList={categories}
         onCategoryChange={handleCategoryChange}
@@ -90,14 +91,14 @@ export default function Home() {
       {loading ? (
         <div
           className={cn(
-            'bg-white flex size-full items-center justify-center flex-col',
+            'flex size-full flex-col items-center justify-center bg-white',
             'rounded-lg p-8',
           )}
         >
           <div className="size-40">
             {' '}
             <Lottie
-              className="w-auto h-full flex items-center justify-center"
+              className="flex h-full w-auto items-center justify-center"
               lottieFile={LoadingLottie}
             />
           </div>

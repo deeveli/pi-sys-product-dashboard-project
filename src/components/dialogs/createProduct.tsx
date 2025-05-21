@@ -3,15 +3,13 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { CreateInputForm } from '../form/create';
 import { Separator } from '@/components/ui/separator';
+
+import { CreateInputForm } from '../form/create';
 
 export function AddProduct() {
   return (
@@ -29,10 +27,10 @@ export function AddProduct() {
       </DialogTrigger>
       <DialogContent className="max-w-[340px] rounded-lg md:max-w-[500px]">
         <DialogHeader className="mb-4">
-          <DialogTitle className="font-extrabold text-xl">
+          <DialogTitle className="text-xl font-extrabold">
             Add New Product
           </DialogTitle>
-          <DialogDescription className="text-sm text-muted italic">
+          <DialogDescription className="text-sm italic text-muted">
             Add a new product to the inventory.
           </DialogDescription>
         </DialogHeader>

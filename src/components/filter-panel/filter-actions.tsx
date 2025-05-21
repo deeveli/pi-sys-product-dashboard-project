@@ -1,11 +1,11 @@
-// src/app/components/FilterPanel/FilterActions.tsx
 'use client';
+
+import { Trash2 } from 'lucide-react';
+import React from 'react';
+import { FiHeart } from 'react-icons/fi';
 
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
-import { Trash2 } from 'lucide-react';
-import { FiHeart } from 'react-icons/fi';
-import React from 'react';
 
 interface FilterActionsProps {
   onResetFilters: () => void;

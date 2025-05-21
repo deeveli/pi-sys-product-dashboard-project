@@ -1,4 +1,8 @@
-'use client'
+'use client';
+import { CircleX, Trash2Icon } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+
+import { Button } from '@/components/ui/button';
 import {
   Dialog,
   DialogContent,
@@ -6,22 +10,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from '@/components/ui/dialog';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { CreateInputForm } from '../form/create';
 import { Separator } from '@/components/ui/separator';
-import React, { useEffect, useState } from 'react';
-import {
-  deleteProduct,
-  getProductById,
-  Product,
-} from '@/hooks/useProductService';
-import { ViewForm } from '../form/view';
-import { Button } from '@/components/ui/button';
-import { CircleX, Cross, Crosshair, Trash2Icon } from 'lucide-react';
 import { toast } from '@/components/ui/use-toast';
+import type { Product } from '@/hooks/useProductService';
+import { deleteProduct, getProductById } from '@/hooks/useProductService';
 
 export interface DeleteProductProps {
   productId: number | null;
@@ -84,25 +77,25 @@ export const DeleteProduct: React.FC<DeleteProductProps> = ({
   return (
     <>
       {isLoading ? (
-        <div className="flex items-center justify-center h-full">
+        <div className="flex h-full items-center justify-center">
           <p className="text-sm text-muted-foreground">Loading...</p>
         </div>
       ) : (
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
           <DialogContent className="max-w-[340px] rounded-lg md:max-w-[500px]">
             <DialogHeader className="mb-4">
-              <DialogTitle className="font-extrabold text-xl">
+              <DialogTitle className="text-xl font-extrabold">
                 Would you like to delete{' '}
                 <span className="text-primary">{product?.name}</span>?
               </DialogTitle>
-              <DialogDescription className="text-sm text-muted italic">
+              <DialogDescription className="text-sm italic text-muted">
                 {product?.description}
               </DialogDescription>
             </DialogHeader>
             <Separator className="-mt-2" />
-            <DialogFooter className="flex flex-col md:flex-row gap-2">
+            <DialogFooter className="flex flex-col gap-2 md:flex-row">
               <Button
-                className="flex gap-2 items-center"
+                className="flex items-center gap-2"
                 onClick={() => {
                   if (product?.id !== undefined) handleDelete(product.id);
                 }}
@@ -110,7 +103,7 @@ export const DeleteProduct: React.FC<DeleteProductProps> = ({
                 <Trash2Icon size={15} color="white" /> Delete
               </Button>
               <Button
-                className="flex gap-2 items-center bg-black hover:bg-black/80"
+                className="flex items-center gap-2 bg-black hover:bg-black/80"
                 onClick={handleCancel}
               >
                 <CircleX size={15} color="white" /> Cancel
@@ -122,4 +115,3 @@ export const DeleteProduct: React.FC<DeleteProductProps> = ({
     </>
   );
 };
-

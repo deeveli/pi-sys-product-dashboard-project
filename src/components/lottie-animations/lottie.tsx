@@ -1,7 +1,8 @@
 'use client';
 
-import React from 'react';
 import Lottie from 'lottie-react';
+import React from 'react';
+
 import EmptyLottie from '@/animations/empty-lottie.json';
 
 interface LottieAnimationProps {

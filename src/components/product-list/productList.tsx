@@ -1,6 +1,20 @@
 'use client';
 
+import { flexRender } from '@tanstack/react-table';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import React, { useMemo } from 'react';
+
+import { DeleteProduct } from '@/components/dialogs/deleteProduct';
+import { UpdateProduct } from '@/components/dialogs/updateProduct';
+import { ViewProduct } from '@/components/dialogs/viewProduct';
 import { Button } from '@/components/ui/button';
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select';
 import {
   Table,
   TableBody,
@@ -9,28 +23,14 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Product } from '@/hooks/useProductService';
-import { cn } from '@/lib/utils';
-import { flexRender } from '@tanstack/react-table';
-import { useEffect, useState, useMemo } from 'react';
-import { UpdateProduct } from './dialogs/updateProduct';
-import { ViewProduct } from './dialogs/viewProduct';
-import { DeleteProduct } from './dialogs/deleteProduct';
-
-import { useProductTable } from '@/hooks/useProductTable';
-import { useModalControls } from '@/hooks/useModalControls';
 import { useFavoriteProducts } from '@/hooks/useFavoriteProduct';
-import { getProductColumns } from './data-table/columns';
+import { useModalControls } from '@/hooks/useModalControls';
+import type { Product } from '@/hooks/useProductService';
+import { useProductTable } from '@/hooks/useProductTable';
+import { cn } from '@/lib/utils';
 
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from '@/components/ui/select';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
-import LottieAnimation from './lottie-animations/lottie';
+import { getProductColumns } from '../data-table/columns';
+import LottieAnimation from '../lottie-animations/lottie';
 
 export interface DataProps {
   data: Product[];
@@ -53,8 +53,6 @@ const ProductList: React.FC<DataProps> = ({
   pageSize,
   onPageSizeChange,
 }) => {
-  const [loading, setLoading] = useState(true);
-
   // Modal controls
   const {
     isEditOpen,
@@ -95,33 +93,27 @@ const ProductList: React.FC<DataProps> = ({
   // Product table
   const { table } = useProductTable({ data, columns });
 
-  useEffect(() => {
-    if (data) {
-      setLoading(false);
-    }
-  }, [data]);
-
   const pageSizes = [10, 20, 50, 100];
 
   return (
     <>
       <div
         className={cn(
-          'bg-white flex h-full w-full items-start justify-start flex-col overflow-y-scroll',
-          'rounded-lg p-4 space-y-4',
+          'flex h-full w-full flex-col items-start justify-start overflow-y-scroll bg-white',
+          'space-y-4 rounded-lg p-4',
         )}
       >
         <Table className="w-full overflow-hidden">
           <TableHeader>
             {table.getHeaderGroups().map((headerGroup) => (
               <TableRow
-                className="hover:bg-primary/0 cursor-pointer"
+                className="cursor-pointer hover:bg-primary/0"
                 key={headerGroup.id}
               >
                 {headerGroup.headers.map((header) => (
                   <TableHead
                     key={header.id}
-                    className={cn(`font-bold text-sm`)}
+                    className={cn(`text-sm font-bold`)}
                   >
                     {header.isPlaceholder
                       ? null
@@ -140,7 +132,7 @@ const ProductList: React.FC<DataProps> = ({
                 <TableRow
                   key={row.id}
                   data-state={row.getIsSelected() && 'selected'}
-                  className="hover:bg-primary/20 cursor-pointer"
+                  className="cursor-pointer hover:bg-primary/20"
                   onClick={() =>
                     row.original.id
                       ? handleViewClick(row.original.id)
@@ -165,12 +157,12 @@ const ProductList: React.FC<DataProps> = ({
                 >
                   <div
                     className={cn(
-                      'bg-white flex size-full items-center justify-center flex-col',
+                      'flex size-full flex-col items-center justify-center bg-white',
                       'rounded-lg p-8',
                     )}
                   >
                     <div className="size-40">
-                      <LottieAnimation className="w-auto h-full flex items-center justify-center " />
+                      <LottieAnimation className="flex h-full w-auto items-center justify-center " />
                     </div>
                   </div>
                 </TableCell>
@@ -180,19 +172,19 @@ const ProductList: React.FC<DataProps> = ({
         </Table>
       </div>
       <div
-        className={cn('bg-white flex h-fit w-full flex-col', 'rounded-lg px-4')}
+        className={cn('flex h-fit w-full flex-col bg-white', 'rounded-lg px-4')}
       >
         {/* Pagination controls */}
-        <div className="flex items-center md:flex-row flex-col-reverse md: justify-between gap-x-2 gap-y-4 py-4">
-          <div className="flex w-full justify-center md:justify-start text-sm text-muted">
+        <div className="md: flex flex-col-reverse items-center justify-between gap-x-2 gap-y-4 py-4 md:flex-row">
+          <div className="flex w-full justify-center text-sm text-muted md:justify-start">
             Showing {data.length} of {totalProducts} products.
-            <span className="text-muted/50 mx-2">{'  |  '}</span>
-            <span className="font-bold text-primary mr-1">
+            <span className="mx-2 text-muted/50">{'  |  '}</span>
+            <span className="mr-1 font-bold text-primary">
               Page {currentPage}
             </span>{' '}
             of {totalPages}
           </div>
-          <div className="flex w-full flex-row items-center justify-between md:justify-end gap-x-4 gap-y-4">
+          <div className="flex w-full flex-row items-center justify-between gap-4 md:justify-end">
             <div className="flex flex-row items-center gap-x-2 gap-y-1">
               <label
                 htmlFor="pageSizeSelect"

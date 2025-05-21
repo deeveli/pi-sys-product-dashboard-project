@@ -1,15 +1,13 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
+import Link from 'next/link';
 
-import { siteConfig } from '@/data/app'
-import { useOnScroll } from '@/hooks'
-import { cn } from '@/lib/utils'
-
-import ThemeSwitch from '../theme-switch'
+import { siteConfig } from '@/data/app';
+import { useOnScroll } from '@/hooks';
+import { cn } from '@/lib/utils';
 
 const Header = () => {
-  const isScrolled = useOnScroll()
+  const isScrolled = useOnScroll();
 
   return (
     <header
@@ -21,15 +19,15 @@ const Header = () => {
       )}
     >
       <div className={cn('container h-full')}>
-        <div className={cn('flex h-full items-center justify-between')}>
+        <div className={cn('flex h-full items-center justify-start')}>
           <Link href="/" className={cn('text-2xl font-bold')}>
-            {siteConfig.name}
+            {siteConfig.name}.
           </Link>
-          <ThemeSwitch />
+          {/* <ThemeSwitch /> */}
         </div>
       </div>
     </header>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

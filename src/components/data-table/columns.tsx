@@ -1,8 +1,4 @@
-import { ColumnDef } from '@tanstack/react-table';
-import { Product } from '@/hooks/useProductService';
-import { Checkbox } from '@/components/ui/checkbox';
-import { cn } from '@/lib/utils';
-import { Button } from '@/components/ui/button';
+import type { ColumnDef } from '@tanstack/react-table';
 import {
   ArrowUpDown,
   Copy,
@@ -14,17 +10,20 @@ import {
   StarIcon,
   Trash2,
 } from 'lucide-react';
+import React from 'react';
 import { FaHeart } from 'react-icons/fa';
 import { FiHeart } from 'react-icons/fi';
+
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
-  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import React from 'react';
+import type { Product } from '@/hooks/useProductService';
+import { cn } from '@/lib/utils';
 
 interface ProductColumnProps {
   handleFavoriteClick: (productId: number) => void;
@@ -75,7 +74,7 @@ export const getProductColumns = ({
     header: ({ column }) => (
       <div
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        className={cn('flex flex-row gap-x-4 items-center')}
+        className={cn('flex flex-row items-center gap-x-4')}
       >
         Product Name <ArrowUpDown size={15} color="grey" />
       </div>
@@ -89,13 +88,13 @@ export const getProductColumns = ({
     header: ({ column }) => (
       <div
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        className={cn('flex flex-row gap-x-4 items-center')}
+        className={cn('flex flex-row items-center gap-x-4')}
       >
         Category <ArrowUpDown size={15} color="grey" />
       </div>
     ),
     cell: ({ row }) => (
-      <div className="lowercase text-xs text-muted bg-muted/5 px-2 py-[0.3rem] items-center rounded-full  border-primary w-fit flex">
+      <div className="flex w-fit items-center rounded-full border-primary bg-muted/5 px-2 py-[0.3rem]  text-xs lowercase text-muted">
         {row.getValue('category')}
       </div>
     ),
@@ -107,7 +106,7 @@ export const getProductColumns = ({
     header: ({ column }) => (
       <div
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
-        className={cn('flex flex-row gap-x-4 items-center')}
+        className={cn('flex flex-row items-center gap-x-4')}
       >
         Rating <ArrowUpDown size={15} color="grey" />
       </div>
@@ -149,7 +148,7 @@ export const getProductColumns = ({
       };
 
       return (
-        <div className="flex items-center gap-x-1 rounded-full p-2 bg-primary/10 w-fit">
+        <div className="flex w-fit items-center gap-x-1 rounded-full bg-primary/10 p-2">
           {renderStars()}
         </div>
       );
@@ -161,7 +160,7 @@ export const getProductColumns = ({
     accessorKey: 'price',
     header: ({ column }) => (
       <div
-        className="flex flex-row gap-x-4 items-center text-right"
+        className="flex flex-row items-center gap-x-4 text-right"
         onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
       >
         Price <ArrowUpDown size={15} color="grey" />
@@ -190,7 +189,7 @@ export const getProductColumns = ({
         <div className={cn('flex items-center gap-x-2')}>
           <Button
             variant="ghost"
-            className="h-8 w-8 p-0"
+            className="size-8 p-0"
             onClick={(e) => {
               e.stopPropagation();
               if (product?.id !== undefined) handleFavoriteClick(product.id);
@@ -207,7 +206,7 @@ export const getProductColumns = ({
             <DropdownMenuTrigger asChild>
               <Button
                 variant="ghost"
-                className="h-8 w-8 p-0"
+                className="size-8 p-0"
                 onClick={(e) => e.stopPropagation()}
               >
                 <span className="sr-only">Open menu</span>

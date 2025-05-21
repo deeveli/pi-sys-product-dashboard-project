@@ -1,5 +1,19 @@
-// components/data-table/data-table.tsx
 'use client';
+
+import type {
+  ColumnDef,
+  ColumnFiltersState,
+  SortingState,
+  VisibilityState,
+} from '@tanstack/react-table';
+import {
+  flexRender,
+  getCoreRowModel,
+  getFilteredRowModel,
+  getSortedRowModel,
+  useReactTable,
+} from '@tanstack/react-table';
+import { useState } from 'react';
 
 import { Button } from '@/components/ui/button';
 import {
@@ -11,19 +25,6 @@ import {
   TableRow,
 } from '@/components/ui/table';
 import { cn } from '@/lib/utils';
-import {
-  ColumnDef,
-  ColumnFiltersState,
-  flexRender,
-  getCoreRowModel,
-  getFilteredRowModel,
-  getPaginationRowModel,
-  getSortedRowModel,
-  SortingState,
-  useReactTable,
-  VisibilityState,
-} from '@tanstack/react-table';
-import { useState } from 'react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -34,7 +35,6 @@ interface DataTableProps<TData, TValue> {
 export function DataTable<TData, TValue>({
   columns,
   data,
-  onEditClick, // Destructure onEditClick
 }: DataTableProps<TData, TValue>) {
   const [sorting, setSorting] = useState<SortingState>([]);
   const [columnFilters, setColumnFilters] = useState<ColumnFiltersState>([]);
@@ -67,7 +67,7 @@ export function DataTable<TData, TValue>({
   return (
     <div
       className={cn(
-        'bg-white flex h-fit w-full flex-col rounded-lg p-4 space-y-4 text-text-body',
+        'text-text-body flex h-fit w-full flex-col space-y-4 rounded-lg bg-white p-4',
       )}
     >
       <Table>
@@ -75,7 +75,7 @@ export function DataTable<TData, TValue>({
           {table.getHeaderGroups().map((headerGroup) => (
             <TableRow className="hover:bg-primary/0" key={headerGroup.id}>
               {headerGroup.headers.map((header) => (
-                <TableHead key={header.id} className={cn(`font-bold text-sm`)}>
+                <TableHead key={header.id} className={cn(`text-sm font-bold`)}>
                   {header.isPlaceholder
                     ? null
                     : flexRender(

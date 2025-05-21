@@ -63,17 +63,16 @@
 
     --radius: 0.5rem;
 
-     /* Text Colors */
-     --text-heading: 220 15% 15%;      /* Default dark for headings */
-     --text-body: 220 10% 25%;         /* Slightly lighter for body */
-     --muted: 220 10% 50%;        /* For secondary text */
-     --text-inverted: 0 0% 100%;       /* Light text on dark backgrounds */
-     --text-accent: 28 90% 55%;        /* Accent for highlights or links */
-     --text-secondary: 340 80% 70%;    /* Secondary emphasis */
-     --text-success: 142 70% 45%;      /* For success messages */
-     --text-warning: 45 100% 60%;      /* For warnings */
-     --text-danger: 0 75% 55%;         /* For errors or alerts */
-
+    /* Text Colors */
+    --text-heading: 220 15% 15%; /* Default dark for headings */
+    --text-body: 220 10% 25%; /* Slightly lighter for body */
+    --muted: 220 10% 50%; /* For secondary text */
+    --text-inverted: 0 0% 100%; /* Light text on dark backgrounds */
+    --text-accent: 28 90% 55%; /* Accent for highlights or links */
+    --text-secondary: 340 80% 70%; /* Secondary emphasis */
+    --text-success: 142 70% 45%; /* For success messages */
+    --text-warning: 45 100% 60%; /* For warnings */
+    --text-danger: 0 75% 55%; /* For errors or alerts */
   }
 
   .dark {

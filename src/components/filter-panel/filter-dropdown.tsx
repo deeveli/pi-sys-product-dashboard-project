@@ -1,5 +1,8 @@
 'use client';
 
+import { ChevronDown } from 'lucide-react';
+import React from 'react';
+
 import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
@@ -9,8 +12,6 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { cn } from '@/lib/utils';
-import { ChevronDown } from 'lucide-react';
-import React from 'react';
 
 interface FilterOption {
   label: string;
@@ -42,7 +43,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
       <DropdownMenuTrigger asChild>
         <Button
           variant="ghost"
-          className="w-full justify-between text-sm font-semibold bg-primary/10 px-4"
+          className="w-full justify-between bg-primary/10 px-4 text-sm font-semibold"
         >
           {displayLabel}
           <ChevronDown size={15} className={cn('text-muted')} />
@@ -50,7 +51,7 @@ const FilterDropdown: React.FC<FilterDropdownProps> = ({
       </DropdownMenuTrigger>
       <DropdownMenuContent
         className={cn(
-          'shadow-lg border-none w-full h-[20vh] overflow-scroll cursor-pointer',
+          'h-[20vh] w-full cursor-pointer overflow-scroll border-none shadow-lg',
         )}
       >
         {options.map((option) => (

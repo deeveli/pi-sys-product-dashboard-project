@@ -1,25 +1,25 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import React, { useEffect, useState } from 'react'; // Import useEffect
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
-import { useEffect, useState } from 'react'; // Import useEffect
 
 import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { toast } from '@/components/ui/use-toast';
-import { cn } from '@/lib/utils';
-import { getProductById, updateProduct, Product } from '@/hooks/useProductService'; // Import getProductById and updateProduct
 import { Separator } from '@/components/ui/separator';
+import { toast } from '@/components/ui/use-toast';
+import type { Product } from '@/hooks/useProductService';
+import { getProductById, updateProduct } from '@/hooks/useProductService';
+import { cn } from '@/lib/utils';
 
 // Zod schema for all form fields
 const FormSchema = z.object({
@@ -180,7 +180,7 @@ export const UpdateInputForm: React.FC<UpdateInputFormProps> = ({
   return (
     <>
       {isLoading ? (
-        <div className="flex items-center justify-center h-full">
+        <div className="flex h-full items-center justify-center">
           <p className="text-sm text-muted-foreground">Loading...</p>
         </div>
       ) : (
@@ -203,7 +203,7 @@ export const UpdateInputForm: React.FC<UpdateInputFormProps> = ({
                       <FormControl>
                         <Input
                           className={cn(
-                            'rounded-full placeholder:italic text-xs',
+                            'rounded-full text-xs placeholder:italic',
                           )}
                           type={question.type}
                           placeholder={question.description}
@@ -235,7 +235,7 @@ export const UpdateInputForm: React.FC<UpdateInputFormProps> = ({
             ))}
             <Separator className="" />
             <Button
-              className="w-full flex"
+              className="flex w-full"
               variant={'default'}
               size={'lg'}
               type="submit"

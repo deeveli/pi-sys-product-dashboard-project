@@ -2,14 +2,15 @@ import '../global.css';
 
 import type { Metadata } from 'next';
 import { Plus_Jakarta_Sans as PlusJakartaSans } from 'next/font/google';
+import React from 'react';
 
 import Analytics from '@/components/analytics';
 import Footer from '@/components/footer';
 import Header from '@/components/header';
 import { ThemeProvider } from '@/components/providers';
+import { Toaster } from '@/components/ui/toaster';
 import { seo } from '@/data/meta';
 import { cn } from '@/lib/utils';
-import { Toaster } from '@/components/ui/toaster';
 
 const fontSans = PlusJakartaSans({
   subsets: ['latin'],
@@ -27,17 +28,17 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning className={fontSans.variable}>
       <body>
-        <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
+        <ThemeProvider attribute="class" defaultTheme="light">
           <div
             className={cn(
-              'min-h-screen h-full w-full flex flex-col justify-start',
+              'flex h-full min-h-screen w-full flex-col justify-start',
               'bg-primary/30',
             )}
           >
             <Header />
             <main
               className={cn(
-                'container px-2 md:px-8 py-4 h-full overflow-clip rounded-lg justify-start items-start md:py-0',
+                'container h-full items-start justify-start overflow-clip rounded-lg px-2 py-4 md:px-8 md:py-0',
               )}
             >
               {children}

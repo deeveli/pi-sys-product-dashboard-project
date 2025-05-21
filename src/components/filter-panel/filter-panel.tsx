@@ -1,17 +1,15 @@
-// src/app/components/filter-panel.tsx
 'use client';
 
-import { cn } from '@/lib/utils';
-import { Input } from '@/components/ui/input';
-import { useEffect, useState } from 'react';
-import { FilterPanelProps } from '@/data/app/interface';
-import FilterDropdown from './filter-dropdown';
-import { AddProduct } from '../dialogs/createProduct';
-import FilterActions from './filter-actions';
-import { Filter } from 'lucide-react';
-import { FiFilter } from 'react-icons/fi';
+import React, { useEffect, useState } from 'react';
 import { FaFilter } from 'react-icons/fa';
+
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import type { FilterPanelProps } from '@/data/app/interface';
+import { cn } from '@/lib/utils';
+
+import { AddProduct } from '../dialogs/createProduct';
+import FilterDropdown from './filter-dropdown';
 
 const FilterPanel: React.FC<FilterPanelProps> = ({
   onCategoryChange,
@@ -80,23 +78,9 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     onSearchChange(event.target.value);
   };
 
-  // Add handlers for FilterActions
-  const handleResetAllFilters = () => {
-    setCategory('all');
-    setPrice('all');
-    setRating('all');
-    setSearchText('');
-    onCategoryChange('all');
-    onPriceChange('all');
-    onRatingChange('all');
-    onSearchChange('');
-  };
-
   const handleFilterIsVisibleOnMobile = () => {
     setIsFilterVisibleOnMobile((prev) => !prev);
   };
-
-
 
   const renderFilterDropdowns = () => (
     <>
@@ -129,19 +113,19 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
     <div className={cn('')}>
       <div
         className={cn(
-          'bg-background flex h-fit w-full flex-col items-center justify-start',
-          'rounded-lg p-4 space-y-4',
+          'flex h-fit w-full flex-col items-center justify-start bg-background',
+          'space-y-4 rounded-lg p-4',
         )}
       >
         <div
           className={cn(
-            'flex flex-col md:flex-row w-full items-start md:items-center gap-4  justify-start md:justify-between',
+            'flex w-full flex-col items-start justify-start gap-4 md:flex-row  md:items-center md:justify-between',
           )}
         >
           {/* Product Header Title */}
           <div
             className={cn(
-              'flex min-w-40 w-full md:w-fit h-full font-black text-2xl justify-between md:justify-start items-center ',
+              'flex h-full w-full min-w-40 items-center justify-between text-2xl font-black md:w-fit md:justify-start ',
               'text-nowrap',
             )}
           >
@@ -149,29 +133,31 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
 
             {isFilterVisibleOnMobile ? (
               <Button
-              variant={'default'}
-              className="flex md:hidden bg-primary/80 focus-visible:bg-primary size-7 p-2"
-              onClick={handleFilterIsVisibleOnMobile}
-            >
-              <FaFilter
-                size={15}
-                className="text-white focus-visible:text-white"
-              />
+                variant={'default'}
+                className="flex size-7 bg-primary/80 p-2 focus-visible:bg-primary md:hidden"
+                onClick={handleFilterIsVisibleOnMobile}
+              >
+                <FaFilter
+                  size={15}
+                  className="text-white focus-visible:text-white"
+                />
               </Button>
-            ) : (<Button
-              variant={'outline'}
-              className="flex md:hidden border-primary/80 focus-visible:bg-primary size-7 p-2"
-              onClick={handleFilterIsVisibleOnMobile}
-            >
-              <FaFilter
-                size={15}
-                className="text-primary/80 focus-visible:text-white"
-              />
-            </Button>)}
+            ) : (
+              <Button
+                variant={'outline'}
+                className="flex size-7 border-primary/80 p-2 focus-visible:bg-primary md:hidden"
+                onClick={handleFilterIsVisibleOnMobile}
+              >
+                <FaFilter
+                  size={15}
+                  className="text-primary/80 focus-visible:text-white"
+                />
+              </Button>
+            )}
           </div>
           <div
             className={cn(
-              'flex w-full flex-col md:flex-row justify-end gap-y-2 md:gap-y-0 gap-x-4 items-center',
+              'flex w-full flex-col items-center justify-end gap-x-4 gap-y-2 md:flex-row md:gap-y-0',
             )}
           >
             {/* SearchBox */}
@@ -180,25 +166,25 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
               placeholder="Filter products..."
               value={searchText}
               onChange={handleSearchTextChange}
-              className="max-w-sm lg:max-w-sm rounded-full h-full placeholder:text-text-muted"
+              className="placeholder:text-text-muted h-full max-w-sm rounded-full lg:max-w-sm"
             />
 
             {/* AddProduct */}
             <AddProduct />
           </div>
         </div>
-        <div className={cn('hidden md:block w-full h-[1px] bg-primary/40')} />
+        <div className={cn('hidden h-[1px] w-full bg-primary/40 md:block')} />
         {isFilterVisibleOnMobile && (
-          <div className={cn('w-full h-[1px] bg-primary/40')} />
+          <div className={cn('h-[1px] w-full bg-primary/40')} />
         )}
         {/* Desktop Filter Options & Actions */}
-        <div className="hidden md:flex w-full">
+        <div className="hidden w-full md:flex">
           <div
-            className={cn('flex flex-row w-full items-center justify-between')}
+            className={cn('flex w-full flex-row items-center justify-between')}
           >
             <div
               className={cn(
-                'grid grid-cols-2 md:grid-cols-6 gap-2 md:gap-4 w-full items-center justify-start',
+                'grid w-full grid-cols-2 items-center justify-start gap-2 md:grid-cols-6 md:gap-4',
               )}
             >
               {renderFilterDropdowns()}
@@ -215,12 +201,12 @@ const FilterPanel: React.FC<FilterPanelProps> = ({
           <div className="flex w-full">
             <div
               className={cn(
-                'flex flex-row w-full items-center justify-between',
+                'flex w-full flex-row items-center justify-between',
               )}
             >
               <div
                 className={cn(
-                  'grid grid-cols-2 md:grid-cols-6 gap-2 md:gap-4 w-full items-center justify-start',
+                  'grid w-full grid-cols-2 items-center justify-start gap-2 md:grid-cols-6 md:gap-4',
                 )}
               >
                 {renderFilterDropdowns()}

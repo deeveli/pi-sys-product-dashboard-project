@@ -1,24 +1,24 @@
-'use client'
+'use client';
 
-import { useTheme } from '@/hooks'
-import { cn } from '@/lib/utils'
+import { useTheme } from '@/hooks';
+import { cn } from '@/lib/utils';
 
-import Icons from '../icons'
-import { Button } from '../ui/button'
+import Icons from '../icons';
+import { Button } from '../ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from '../ui/dropdown-menu'
+} from '../ui/dropdown-menu';
 
 const ThemeSwitch = () => {
-  const { setTheme } = useTheme()
+  const { setTheme } = useTheme();
 
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm" className="h-8 w-8 px-0">
+        <Button variant="ghost" size="sm" className="size-8 px-0">
           <Icons.sun
             className={cn(
               'rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0',
@@ -47,7 +47,7 @@ const ThemeSwitch = () => {
         </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
-  )
-}
+  );
+};
 
-export default ThemeSwitch
+export default ThemeSwitch;

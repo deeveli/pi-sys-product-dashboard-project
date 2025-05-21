@@ -1,4 +1,4 @@
-import type { LucideIcon, LucideProps } from 'lucide-react'
+import type { LucideIcon, LucideProps } from 'lucide-react';
 import {
   AlertTriangle,
   ArrowRight,
@@ -24,9 +24,9 @@ import {
   Twitter,
   User,
   X,
-} from 'lucide-react'
+} from 'lucide-react';
 
-export type Icon = LucideIcon
+export type Icon = LucideIcon;
 
 const Icons = {
   logo: Command,
@@ -186,6 +186,6 @@ const Icons = {
   ),
   twitter: Twitter,
   check: Check,
-}
+};
 
-export default Icons
+export default Icons;

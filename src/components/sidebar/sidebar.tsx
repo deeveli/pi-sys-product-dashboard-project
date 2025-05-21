@@ -1,17 +1,18 @@
-'use client'
+'use client';
 
-import Link from 'next/link'
-import { useRef } from 'react'
+import Link from 'next/link';
+import type { JSX } from 'react';
+import { useRef } from 'react';
 
-import { cn } from '@/lib/utils'
+import { cn } from '@/lib/utils';
 
-import { useSidebar } from '../providers'
-import { Button } from '../ui/button'
+import { useSidebar } from '../providers';
+import { Button } from '../ui/button';
 
 interface NavItem {
-  label: string
-  path: string
-  icon?: JSX.Element
+  label: string;
+  path: string;
+  icon?: JSX.Element;
 }
 
 const navItems: NavItem[] = [
@@ -25,11 +26,11 @@ const navItems: NavItem[] = [
     path: '/components',
     // icon: <PuzzlePiece className={cn('h-6 w-6')} />,
   },
-]
+];
 
 const Sidebar = () => {
-  const { collapsed, setCollapsed, show, setShow } = useSidebar()
-  const sidebarRef = useRef(null)
+  const { collapsed, setCollapsed, show, setShow } = useSidebar();
+  const sidebarRef = useRef(null);
 
   return (
     <>
@@ -44,7 +45,7 @@ const Sidebar = () => {
         id="__sidebar"
         ref={sidebarRef}
         className={cn(
-          'bg-sidebar duration-faster fixed z-[1] h-screen translate-x-0 overflow-hidden transition-all',
+          'duration-faster fixed z-[1] h-screen translate-x-0 overflow-hidden bg-sidebar transition-all',
           { 'w-64': !collapsed },
           { 'w-16': collapsed },
           { '-translate-x-full': !show },
@@ -86,7 +87,7 @@ const Sidebar = () => {
           <Button
             variant="link"
             onClick={() => setCollapsed(!collapsed)}
-            className="h-8 w-8 rounded-full bg-accent p-0 shadow-sm"
+            className="size-8 rounded-full bg-accent p-0 shadow-sm"
           >
             {/* <CaretLeft
               className={cn('h-4 w-4 fill-foreground', {
@@ -97,7 +98,7 @@ const Sidebar = () => {
         </div>
       </aside>
     </>
-  )
-}
+  );
+};
 
-export default Sidebar
+export default Sidebar;

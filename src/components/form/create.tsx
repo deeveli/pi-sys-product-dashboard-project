@@ -7,18 +7,17 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import {
   Form,
-  FormControl,
-  FormDescription, // Not used in this example, but kept for context
+  FormControl, // Not used in this example, but kept for context
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from '@/components/ui/form';
 import { Input } from '@/components/ui/input';
-import { toast } from '@/components/ui/use-toast';
-import { cn } from '@/lib/utils';
-import { createProduct } from '@/hooks/useProductService';
 import { Separator } from '@/components/ui/separator';
+import { toast } from '@/components/ui/use-toast';
+import { createProduct } from '@/hooks/useProductService';
+import { cn } from '@/lib/utils';
 
 // Zod schema for all form fields
 const FormSchema = z.object({
@@ -123,7 +122,7 @@ export function CreateInputForm() {
                   {' '}
                   <FormControl>
                     <Input
-                      className={cn('rounded-full placeholder:italic text-xs')}
+                      className={cn('rounded-full text-xs placeholder:italic')}
                       type={question.type}
                       placeholder={question.description}
                       {...field}
@@ -150,14 +149,21 @@ export function CreateInputForm() {
                       {question.description}
                     </FormDescription>
                   )} */}
-                <FormMessage className='text-xs'/> {/* validation errors */}
+                  <FormMessage className="text-xs" /> {/* validation errors */}
                 </div>
               </FormItem>
             )}
           />
         ))}
-                <Separator className=''/>
-        <Button className='w-full flex' variant={'default'} size={"lg"} type="submit">Create Product</Button>
+        <Separator className="" />
+        <Button
+          className="flex w-full"
+          variant={'default'}
+          size={'lg'}
+          type="submit"
+        >
+          Create Product
+        </Button>
       </form>
     </Form>
   );
