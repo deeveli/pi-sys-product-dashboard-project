@@ -1,21 +1,12 @@
-// components/data-table/columns.tsx
-import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Product } from '@/hooks/useProductService'; // Assuming this path is correct
-import { cn } from '@/lib/utils';
 import { ColumnDef } from '@tanstack/react-table';
+import { Product } from '@/hooks/useProductService';
+import { Checkbox } from '@/components/ui/checkbox';
+import { cn } from '@/lib/utils';
+import { Button } from '@/components/ui/button';
 import {
   ArrowUpDown,
   Copy,
   Eye,
-  Heart,
   MoreHorizontal,
   Pencil,
   Star,
@@ -23,16 +14,33 @@ import {
   StarIcon,
   Trash2,
 } from 'lucide-react';
+import { FaHeart } from 'react-icons/fa';
+import { FiHeart } from 'react-icons/fi';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import React from 'react';
 
-// Define a type for the meta object in the table
-declare module '@tanstack/react-table' {
-  interface TableMeta<TData> {
-    onEditClick: (product: Product) => void;
-  }
+interface ProductColumnProps {
+  handleFavoriteClick: (productId: number) => void;
+  favoriteProductIds: number[];
+  handleViewClick: (productId: number) => void;
+  handleEditClick: (productId: number) => void;
+  handleDeleteClick: (productId: number) => void;
 }
 
-export const columns: ColumnDef<Product>[] = [
+export const getProductColumns = ({
+  handleFavoriteClick,
+  favoriteProductIds,
+  handleViewClick,
+  handleEditClick,
+  handleDeleteClick,
+}: ProductColumnProps): ColumnDef<Product>[] => [
   // Select Column
   {
     id: 'select',
@@ -109,18 +117,14 @@ export const columns: ColumnDef<Product>[] = [
 
       // Determine how many full, half, and outline stars
       const fullStars = Math.floor(rating as number);
-      const halfStars = (rating as number) % 1 >= 0.5 ? 1 : 0;
+      const halfStars = (rating as number) % 1 >= 0.01 ? 1 : 0;
       const outlineStars = 5 - fullStars - halfStars;
 
       const renderStars = () => {
         let stars = [];
-
-        // Add full stars
         for (let i = 0; i < fullStars; i++) {
           stars.push(<StarIcon key={`full-${i}`} size={15} color="#f48525" />);
         }
-
-        // Add half stars
         for (let i = 0; i < halfStars; i++) {
           stars.push(
             <StarHalfIcon
@@ -131,8 +135,6 @@ export const columns: ColumnDef<Product>[] = [
             />,
           );
         }
-
-        // Add outline stars
         for (let i = 0; i < outlineStars; i++) {
           stars.push(
             <Star
@@ -143,7 +145,6 @@ export const columns: ColumnDef<Product>[] = [
             />,
           );
         }
-
         return stars;
       };
 
@@ -158,8 +159,11 @@ export const columns: ColumnDef<Product>[] = [
   // Price Column
   {
     accessorKey: 'price',
-    header: () => (
-      <div className="flex flex-row gap-x-4 items-center text-right">
+    header: ({ column }) => (
+      <div
+        className="flex flex-row gap-x-4 items-center text-right"
+        onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
+      >
         Price <ArrowUpDown size={15} color="grey" />
       </div>
     ),
@@ -178,15 +182,26 @@ export const columns: ColumnDef<Product>[] = [
   {
     id: 'actions',
     enableHiding: false,
-    cell: ({ row, table }) => {
+    cell: ({ row }) => {
       const product = row.original;
-      const onEditClick = table.options.meta?.onEditClick; // Access the meta function
+      const isFavorite = favoriteProductIds.includes(product?.id as number);
 
       return (
-        <>
-          <Button variant="ghost" className="h-8 w-8 p-0">
+        <div className={cn('flex items-center gap-x-2')}>
+          <Button
+            variant="ghost"
+            className="h-8 w-8 p-0"
+            onClick={(e) => {
+              e.stopPropagation();
+              if (product?.id !== undefined) handleFavoriteClick(product.id);
+            }}
+          >
             <span className="sr-only">Open menu</span>
-            <Heart size={18} color="#f48525" />
+            {isFavorite ? (
+              <FaHeart size={18} color="#f48525" />
+            ) : (
+              <FiHeart size={18} color="grey" style={{ opacity: 0.4 }} />
+            )}
           </Button>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -204,25 +219,40 @@ export const columns: ColumnDef<Product>[] = [
               >
                 <Copy size={15} color="#f48525" /> Copy
               </DropdownMenuItem>
-              <DropdownMenuSeparator className="bg-primary/20" />
-              <DropdownMenuItem className="flex w-full cursor-pointer gap-2">
+              <DropdownMenuSeparator className=" bg-primary/20" />
+              <DropdownMenuItem
+                className="flex w-full cursor-pointer gap-2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (product?.id !== undefined) handleViewClick(product.id);
+                }}
+              >
                 <Eye size={15} color="#f48525" />
                 View
               </DropdownMenuItem>
               <DropdownMenuItem
                 className="flex w-full cursor-pointer gap-2"
-                onClick={() => onEditClick?.(product)} // Pass the whole product object
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (product?.id !== undefined) handleEditClick(product.id);
+                }}
               >
                 <Pencil size={15} color="#f48525" />
                 Edit
               </DropdownMenuItem>
-              <DropdownMenuItem className="flex w-full cursor-pointer gap-2">
+              <DropdownMenuItem
+                className="flex w-full cursor-pointer gap-2"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  if (product?.id !== undefined) handleDeleteClick(product.id);
+                }}
+              >
                 <Trash2 size={15} color="#f48525" />
                 Delete
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-        </>
+        </div>
       );
     },
   },
