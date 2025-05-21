@@ -12,13 +12,35 @@ export interface Product {
   rating?: number;
 }
 
-// Fetch all products from the API
-export const fetchProducts = async (): Promise<Product[]> => {
-  const res = await axios.get(API_PRODUCT_URL);
-  if (res.status !== 200) {
-    throw new Error('Failed to fetch products');
+// Fetch products with pagination
+export const fetchProducts = async (
+  page: number = 1,
+  pageSize: number = 100,
+): Promise<{ products: Product[]; totalCount: number }> => {
+  try {
+    const res = await axios.get(API_PRODUCT_URL, {
+      params: {
+        _page: page,
+        _limit: pageSize,
+      },
+      headers: {
+        'X-Total-Count': 'true',
+      },
+    });
+
+    if (res.status !== 200) {
+      throw new Error(`Failed to fetch products. Status code: ${res.status}`);
+    }
+
+    const products = res.data;
+    const totalCountHeader = res.headers['x-total-count'];
+    const totalCount = totalCountHeader ? parseInt(totalCountHeader, 10) : 0;
+
+    return { products, totalCount };
+  } catch (error) {
+    console.error('Error fetching products:', error);
+    throw error;
   }
-  return res.data;
 };
 
 // Create a new product
@@ -51,6 +73,5 @@ export const deleteProduct = async (id: number) => {
 // Delete a product by ID
 export const getCategory = async () => {
   const res = await axios.get(`${API_URL}/categories`);
-  console.log('categories:', res.data);
   return res.data;
 };

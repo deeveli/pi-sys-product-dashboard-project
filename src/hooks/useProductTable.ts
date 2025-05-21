@@ -35,12 +35,13 @@ export const useProductTable = ({ data, columns }: UseProductTableProps) => {
     onSortingChange: setSorting,
     onColumnFiltersChange: setColumnFilters,
     onColumnVisibilityChange: setColumnVisibility,
-    onRowSelectionChange: setRowSelection,
+    // onRowSelectionChange: setRowSelection,
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
-    debugTable: true, // Keep for debugging, remove in production
+    manualPagination: true,
+    debugTable: true,
   });
 
   return { table, sorting, columnFilters, columnVisibility, rowSelection };
