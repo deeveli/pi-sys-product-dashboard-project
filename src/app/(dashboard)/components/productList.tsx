@@ -30,6 +30,7 @@ import {
   SelectValue,
 } from '@/components/ui/select';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
+import LottieAnimation from './lottie-animations/lottie';
 
 export interface DataProps {
   data: Product[];
@@ -160,9 +161,18 @@ const ProductList: React.FC<DataProps> = ({
               <TableRow className={cn('hover:bg-primary/0')}>
                 <TableCell
                   colSpan={columns.length}
-                  className="h-24 text-center"
+                  className="h-full text-center"
                 >
-                  No results.
+                  <div
+                    className={cn(
+                      'bg-white flex size-full items-center justify-center flex-col',
+                      'rounded-lg p-8',
+                    )}
+                  >
+                    <div className="size-40">
+                      <LottieAnimation className="w-auto h-full flex items-center justify-center " />
+                    </div>
+                  </div>
                 </TableCell>
               </TableRow>
             )}

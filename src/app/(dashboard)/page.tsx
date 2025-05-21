@@ -7,6 +7,8 @@ import { useProductsFilterAndSort } from '@/hooks/useProductsFilterAndSort';
 import { useProductStore } from '@/store/productStore';
 import { useEffect } from 'react';
 import { fetchProducts, getCategory, Product } from '@/hooks/useProductService';
+import Lottie from './components/lottie-animations/lottie';
+import LoadingLottie from '@/animations/loading-lottie.json';
 
 export default function Home() {
   const {
@@ -88,13 +90,17 @@ export default function Home() {
       {loading ? (
         <div
           className={cn(
-            'bg-white flex h-full w-full flex-col',
-            'rounded-lg p-4 space-y-4',
-            'text-muted italic text-sm',
-            'text-center py-8',
+            'bg-white flex size-full items-center justify-center flex-col',
+            'rounded-lg p-8',
           )}
         >
-          Loading products...
+          <div className="size-40">
+            {' '}
+            <Lottie
+              className="w-auto h-full flex items-center justify-center"
+              lottieFile={LoadingLottie}
+            />
+          </div>
         </div>
       ) : (
         <ProductList
