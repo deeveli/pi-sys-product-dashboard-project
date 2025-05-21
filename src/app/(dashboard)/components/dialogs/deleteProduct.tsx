@@ -89,7 +89,7 @@ export const DeleteProduct: React.FC<DeleteProductProps> = ({
         </div>
       ) : (
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
-          <DialogContent className="sm:max-w-[425px] md:max-w-[500px]">
+          <DialogContent className="max-w-[340px] rounded-lg md:max-w-[500px]">
             <DialogHeader className="mb-4">
               <DialogTitle className="font-extrabold text-xl">
                 Would you like to delete{' '}
@@ -100,7 +100,7 @@ export const DeleteProduct: React.FC<DeleteProductProps> = ({
               </DialogDescription>
             </DialogHeader>
             <Separator className="-mt-2" />
-            <DialogFooter>
+            <DialogFooter className="flex flex-col md:flex-row gap-2">
               <Button
                 className="flex gap-2 items-center"
                 onClick={() => {

@@ -30,14 +30,14 @@ export default function RootLayout({
         <ThemeProvider attribute="class" defaultTheme="light" enableSystem>
           <div
             className={cn(
-              'min-h-screen max-h-screen h-full w-full flex flex-col justify-start',
+              'min-h-screen h-full w-full flex flex-col justify-start',
               'bg-primary/30',
             )}
           >
             <Header />
             <main
               className={cn(
-                'container  py-4 h-[85vh] overflow-clip rounded-lg justify-start items-start md:py-0',
+                'container px-2 md:px-8 py-4 h-full overflow-clip rounded-lg justify-start items-start md:py-0',
               )}
             >
               {children}

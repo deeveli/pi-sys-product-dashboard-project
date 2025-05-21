@@ -17,11 +17,17 @@ export function AddProduct() {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button type="button" variant="default" size="lg" disabled={false}>
+        <Button
+          type="button"
+          variant="default"
+          size="lg"
+          disabled={false}
+          className="w-full md:w-fit"
+        >
           Add Product
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px] md:max-w-[500px]">
+      <DialogContent className="max-w-[340px] rounded-lg md:max-w-[500px]">
         <DialogHeader className="mb-4">
           <DialogTitle className="font-extrabold text-xl">
             Add New Product

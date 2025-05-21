@@ -1,6 +1,6 @@
 'use client';
 
-import FilterPanel from './components/filter-panel';
+import FilterPanel from './components/filter-panel/filter-panel';
 import ProductList from './components/productList';
 import { cn } from '@/lib/utils';
 import { useProductsFilterAndSort } from '@/hooks/useProductsFilterAndSort';

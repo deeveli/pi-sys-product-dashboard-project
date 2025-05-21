@@ -29,6 +29,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 export interface DataProps {
   data: Product[];
@@ -172,19 +173,17 @@ const ProductList: React.FC<DataProps> = ({
         className={cn('bg-white flex h-fit w-full flex-col', 'rounded-lg px-4')}
       >
         {/* Pagination controls */}
-        <div className="flex items-center justify-between space-x-2 py-4">
-          <div className="flex items-center space-x-4">
-            <div className="flex-1 text-sm text-muted-foreground">
-              Showing {data.length} of {totalProducts} products.
-              <span className="text-muted/50">{'  |  '}</span>
-              <span className="font-bold text-primary">
-                Page {currentPage}
-              </span>{' '}
-              of {totalPages}
-            </div>
+        <div className="flex items-center md:flex-row flex-col-reverse md: justify-between gap-x-2 gap-y-4 py-4">
+          <div className="flex w-full justify-center md:justify-start text-sm text-muted">
+            Showing {data.length} of {totalProducts} products.
+            <span className="text-muted/50 mx-2">{'  |  '}</span>
+            <span className="font-bold text-primary mr-1">
+              Page {currentPage}
+            </span>{' '}
+            of {totalPages}
           </div>
-          <div className="flex items-center justify-end space-x-4">
-            <div className="flex items-center space-x-2">
+          <div className="flex w-full flex-row items-center justify-between md:justify-end gap-x-4 gap-y-4">
+            <div className="flex flex-row items-center gap-x-2 gap-y-1">
               <label
                 htmlFor="pageSizeSelect"
                 className="text-sm text-muted-foreground"
@@ -215,7 +214,13 @@ const ProductList: React.FC<DataProps> = ({
                 onClick={() => onPageChange(currentPage - 1)}
                 disabled={currentPage === 1}
               >
-                Previous
+                <div className="hidden md:block">Previous</div>
+
+                <ChevronLeft
+                  size={15}
+                  color="white"
+                  className="block md:hidden"
+                />
               </Button>
               <Button
                 variant="default"
@@ -223,7 +228,12 @@ const ProductList: React.FC<DataProps> = ({
                 onClick={() => onPageChange(currentPage + 1)}
                 disabled={currentPage === totalPages}
               >
-                Next
+                <div className="hidden md:block">Next</div>
+                <ChevronRight
+                  size={15}
+                  color="white"
+                  className="block md:hidden"
+                />
               </Button>
             </div>{' '}
           </div>

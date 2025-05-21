@@ -46,7 +46,7 @@ export const ViewProduct: React.FC<ViewProductProps> = ({ productId, isOpen, onO
         </div>
       ) : (
         <Dialog open={isOpen} onOpenChange={onOpenChange}>
-          <DialogContent className="sm:max-w-[425px] md:max-w-[500px]">
+          <DialogContent className="max-w-[340px] rounded-lg md:max-w-[500px]">
             <DialogHeader className="mb-4">
               <DialogTitle className="font-extrabold text-xl">
                 {product?.name}
