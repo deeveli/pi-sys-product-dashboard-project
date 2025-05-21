@@ -30,7 +30,6 @@ import { useProductTable } from '@/hooks/useProductTable';
 import { cn } from '@/lib/utils';
 
 import { getProductColumns } from '../data-table/columns';
-import LottieAnimation from '../lottie-animations/lottie';
 
 export interface DataProps {
   data: Product[];
@@ -162,7 +161,8 @@ const ProductList: React.FC<DataProps> = ({
                     )}
                   >
                     <div className="size-40">
-                      <LottieAnimation className="flex h-full w-auto items-center justify-center " />
+                      Loading...
+                      {/* <LottieAnimation className="flex h-full w-auto items-center justify-center " /> */}
                     </div>
                   </div>
                 </TableCell>
