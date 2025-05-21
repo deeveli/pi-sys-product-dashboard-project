@@ -1,5 +1,6 @@
 'use client';
 
+import dynamic from 'next/dynamic';
 import { useEffect } from 'react';
 
 import LoadingLottie from '@/animations/loading-lottie.json';
@@ -8,8 +9,12 @@ import { cn } from '@/lib/utils';
 import { useProductStore } from '@/store/productStore';
 
 import FilterPanel from '../../components/filter-panel/filter-panel';
-import Lottie from '../../components/lottie-animations/lottie';
 import ProductList from '../../components/product-list/productList';
+
+const Lottie = dynamic(
+  () => import('../../components/lottie-animations/lottie'),
+  { ssr: false },
+);
 
 export default function Home() {
   const {

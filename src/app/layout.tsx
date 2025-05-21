@@ -1,6 +1,6 @@
 import '../global.css';
 
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Plus_Jakarta_Sans as PlusJakartaSans } from 'next/font/google';
 import React from 'react';
 
@@ -9,7 +9,7 @@ import Footer from '@/components/footer';
 import Header from '@/components/header';
 import { ThemeProvider } from '@/components/providers';
 import { Toaster } from '@/components/ui/toaster';
-import { seo } from '@/data/meta';
+import { DEFAULT_VIEWPORT, seo } from '@/data/meta';
 import { cn } from '@/lib/utils';
 
 const fontSans = PlusJakartaSans({
@@ -19,6 +19,7 @@ const fontSans = PlusJakartaSans({
 });
 
 export const metadata: Metadata = seo();
+export const viewport: Viewport = DEFAULT_VIEWPORT;
 
 export default function RootLayout({
   children,
